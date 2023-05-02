@@ -11,11 +11,12 @@ const ListProducts = () => {
   //this is the state needed for the UpdateRequest
   // const [editingStudent, setEditingStudent] = useState(null);
 
-  const loadProducts = () => {
+  const loadProducts = (products) => {
+    //pass in products as a prop
     // A function to fetch the list of students that will be load anytime that list change
     fetch("http://localhost:8080/api/products")
       .then((response) => response.json())
-      .then((students) => {
+      .then((products) => {
         console.log("from the code in the backend from fetch", products);
         setProducts(products);
       });
@@ -59,7 +60,7 @@ const ListProducts = () => {
   return (
     <div className="mybody">
       <div className="list-products">
-        <h2>Techtonica Participants </h2>
+        <h2>Happy.Co Products</h2>
         <ul>
           {products.map((product, index) => {
             //map is like a for loop so for every product in the array of objs of porducts we will loop through each product and its index

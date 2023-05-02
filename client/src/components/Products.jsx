@@ -26,4 +26,4 @@ const Products = ({ product }) => {
   );
 };
 
-export default Student;
+export default Products;
