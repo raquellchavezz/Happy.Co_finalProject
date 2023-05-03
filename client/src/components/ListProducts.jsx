@@ -64,47 +64,17 @@ const ListProducts = () => {
   // };
 
   return (
-    <div className="mybody">
-      <div className="list-products">
-        <h2>Happy.Co Products</h2>
-        <ul>
-          {products.map((product, index) => {
-            //map is like a for loop so for every product in the array of objs of porducts we will loop through each product and its index
-            return (
-              <Container style={{ marginTop: "35px" }}>
-                <div>
-                  <Card.Group itemsPerRow={4} stackable>
-                    {products.map((product) => (
-                      <ProductCard product={product} />
-                    ))}
-                  </Card.Group>
-                </div>
-              </Container>
-              // <div key={index}>
-              //   <li> {product.title}</li>
-              //   <li>{product.description}</li>
-              //   <img src={product.image} alt={"image of product"} />
-              // </div>
-
-              // <li key={product.id}>
-              //   {" "}
-              //   <Product
-              //     product={product}
-              //     // toDelete={onDelete}
-              //     // toUpdate={onUpdate}
-              //   />
-              // </li>
-            );
-          })}
-        </ul>
-      </div>
-      {/* <MyForm
-      key={editingStudent ? editingStudent.id : null}
-      onSaveStudent={onSaveStudent}
-      editingStudent={editingStudent}
-      onUpdateStudent={updateStudent} */}
-      {/* /> */}
-    </div>
+    <Container>
+      {" "}
+      {/*can add classname here to do some styling, segment, container https://react.semantic-ui.com/elements/container/*/}
+      <Card.Group centered itemsPerRow={4}>
+        {" "}
+        {/*can style group here, card styling would be done in product card compoennet*/}
+        {products.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </Card.Group>
+    </Container>
   );
 };
 

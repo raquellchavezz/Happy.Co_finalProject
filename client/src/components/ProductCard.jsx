@@ -13,17 +13,15 @@ const ProductCard = ({ product }) => {
   // }
 
   return (
-    <Card.Group>
-      <Card>
-        <Card.Content>
-          <Image size="small" src={product.image} />
+    <Card>
+      <Card.Content>
+        <Image size="small" src={product.image} />
 
-          <Card.Header> {product.title}</Card.Header>
-          <Card.Meta>${product.price}</Card.Meta>
-          <Card.Description>{product.description}</Card.Description>
-        </Card.Content>
-      </Card>
-    </Card.Group>
+        <Card.Header> {product.title}</Card.Header>
+        <Card.Meta>${product.price}</Card.Meta>
+        <Card.Description>{product.description}</Card.Description>
+      </Card.Content>
+    </Card> //just want a single card so you dont need card.group
 
     // <Card>
     //   <Card.Body>
