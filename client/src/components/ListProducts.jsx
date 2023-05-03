@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as ioicons from "react-icons/io5";
 // import MyForm from "./Form";
 import ProductCard from "./ProductCard";
-import { Button, Card, Image, Container } from "semantic-ui-react";
+import { Card, Container } from "semantic-ui-react";
 const ListProducts = () => {
   //created a component
   //dealing with products now
@@ -73,7 +73,7 @@ const ListProducts = () => {
             return (
               <Container style={{ marginTop: "35px" }}>
                 <div>
-                  <Card.Group itemsPerRow={2} stackable>
+                  <Card.Group itemsPerRow={4} stackable>
                     {products.map((product) => (
                       <ProductCard product={product} />
                     ))}

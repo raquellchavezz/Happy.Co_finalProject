@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Image } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 
 const ProductCard = ({ product }) => {
   //maybe pass product into it as a prop.. before  students, toUpdate, toDelete inside{} later
@@ -15,8 +15,9 @@ const ProductCard = ({ product }) => {
   return (
     <Card.Group>
       <Card>
+        <Image src={product.image} wrapped ui={false} />
         <Card.Content>
-          <div>
+          {/* <div>
             <Image.Group
               floated="center"
               size="mini"
@@ -24,13 +25,11 @@ const ProductCard = ({ product }) => {
               wrapped
               ui={false}
             />
-          </div>
+          </div> */}
 
           <Card.Header> {product.title}</Card.Header>
-          <Card.Meta>Friends of Elliot</Card.Meta>
-          <Card.Description>
-            Steve wants to add you to the group <strong>best friends</strong>
-          </Card.Description>
+          <Card.Meta>${product.price}</Card.Meta>
+          <Card.Description>{product.description}</Card.Description>
         </Card.Content>
       </Card>
     </Card.Group>
