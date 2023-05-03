@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as ioicons from "react-icons/io5";
 // import MyForm from "./Form";
-// import Product from "./ProductCard";
-
+import ProductCard from "./ProductCard";
+import { Button, Card, Image, Container } from "semantic-ui-react";
 const ListProducts = () => {
   //created a component
   //dealing with products now
@@ -14,7 +14,7 @@ const ListProducts = () => {
   //this is the state needed for the UpdateRequest
   // const [editingStudent, setEditingStudent] = useState(null);
 
-  const loadProducts = (products) => {
+  const loadProducts = () => {
     //created a function that will get a list of products from a server using the 'fetch'
     //pass in products as a prop
     // A function to fetch the list of products that will be load anytime that list change
@@ -71,11 +71,20 @@ const ListProducts = () => {
           {products.map((product, index) => {
             //map is like a for loop so for every product in the array of objs of porducts we will loop through each product and its index
             return (
-              <div key={index}>
-                <li> {product.title}</li>
-                <li>{product.description}</li>
-                <img src={product.image} alt={"image of product"} />
-              </div>
+              <Container style={{ marginTop: "35px" }}>
+                <div>
+                  <Card.Group itemsPerRow={2} stackable>
+                    {products.map((product) => (
+                      <ProductCard product={product} />
+                    ))}
+                  </Card.Group>
+                </div>
+              </Container>
+              // <div key={index}>
+              //   <li> {product.title}</li>
+              //   <li>{product.description}</li>
+              //   <img src={product.image} alt={"image of product"} />
+              // </div>
 
               // <li key={product.id}>
               //   {" "}
