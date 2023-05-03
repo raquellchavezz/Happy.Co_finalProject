@@ -4,16 +4,20 @@ import * as ioicons from "react-icons/io5";
 // import Product from "./ProductCard";
 
 const ListProducts = () => {
+  //created a component
   //dealing with products now
-  // this is my original state with an array of students
-  // const [students, setStudents] = useState([]);
-  const [products, setProducts] = useState([]); //or null?
+  // this is my original state with an array of products
+  const [products, setProducts] = useState([]);
+  //products is a state variable which uses the useState hook, which initializes the value of products as an empty array.
+  // the second element of the array returned by useState is a function named setProducts that can be used to update the value of products.
+
   //this is the state needed for the UpdateRequest
   // const [editingStudent, setEditingStudent] = useState(null);
 
   const loadProducts = (products) => {
+    //created a function that will get a list of products from a server using the 'fetch'
     //pass in products as a prop
-    // A function to fetch the list of students that will be load anytime that list change
+    // A function to fetch the list of products that will be load anytime that list change
     fetch("http://localhost:8080/api/products")
       .then((response) => response.json())
       .then((products) => {
@@ -23,8 +27,10 @@ const ListProducts = () => {
   };
 
   useEffect(() => {
-    loadProducts();
-  }, []);
+    loadProducts(); //called when component is first rendered, this function will run as a side effect
+  }, []); //array of dependencies that control when the side effect should be run
+  //the useEffect hook is used to run the loadProducts function when the component is mounted (rendered into the DOM) for the first time, which is indicated by the empty dependency array [].
+  //This ensures that the list of products is loaded only once, when the component is first rendered.
 
   // const onSaveStudent = (newStudent) => {
   //   //console.log(newStudent, "From the parent - List of Students");
@@ -65,7 +71,12 @@ const ListProducts = () => {
           {products.map((product, index) => {
             //map is like a for loop so for every product in the array of objs of porducts we will loop through each product and its index
             return (
-              <li key={product.id}> {product.title}</li>
+              <div key={index}>
+                <li> {product.title}</li>
+                <li>{product.description}</li>
+                <img src={product.image} alt={"image of product"} />
+              </div>
+
               // <li key={product.id}>
               //   {" "}
               //   <Product
