@@ -15,17 +15,8 @@ const ProductCard = ({ product }) => {
   return (
     <Card.Group>
       <Card>
-        <Image src={product.image} wrapped ui={false} />
         <Card.Content>
-          {/* <div>
-            <Image.Group
-              floated="center"
-              size="mini"
-              src={product.image}
-              wrapped
-              ui={false}
-            />
-          </div> */}
+          <Image size="small" src={product.image} />
 
           <Card.Header> {product.title}</Card.Header>
           <Card.Meta>${product.price}</Card.Meta>
