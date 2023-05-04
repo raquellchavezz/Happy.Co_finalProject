@@ -3,41 +3,29 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MyNavBar from "./components/Navbar";
 import ListProducts from "./components/ListProducts";
 import "semantic-ui-css/semantic.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/", //always showing root.jsx
-//     element: <Root />,
-//     children: [
-//       { index: true, element: <Home /> },
-//       {
-//         path: "aboutme",
-//         element: <AboutMe />,
-//       },
-//       {
-//         path: "blogs",
-//         element: <Blogs />,
-//       },
-//       {
-//         path: "blogs/:blogId",
-//         element: <ShowBlog />,
-//       },
-//     ],
-//   },
-// ]);
-
-// function App() {
-//   return <RouterProvider router={router} />;
-// }
-// export default App;
-
+import Profile from "./components/Profile";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Router,
+  RouterProvider,
+} from "react-router-dom";
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<MyNavBar />}>
+      <Route index element={<ListProducts />} />
+      <Route path="user-profile" element={<Profile />} />
+    </Route>
+  )
+);
 function App() {
   return (
-    <div className="App">
-      <MyNavBar />
-      <ListProducts />
-    </div>
+    <RouterProvider router={router} />
+    // <div className="App">
+    //   <MyNavBar />
+    //   <ListProducts />
+    // </div>
   );
 }
 

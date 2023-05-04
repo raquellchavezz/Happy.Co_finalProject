@@ -2,17 +2,15 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Logo from "../assets/BlueTechtonicaWord.png";
+import { Link, Outlet } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
-import { useState } from "react";
 function MyNavBar(props) {
-  const [users, setUsers] = useState(null); //inital state is nothing
-  const handleLogin = () => {
-    fetch("http://localhost:8080/api/users")
-      .then((response) => response.json())
-      .then((users) => {
-        setUsers(users);
-      });
-  };
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+
+  console.log("From Navbar", user);
+  console.log("From Navbar", isAuthenticated);
+
   return (
     <>
       <Navbar data-testid="navbar" bg="dark" variant="dark" sticky="top">
@@ -25,19 +23,34 @@ function MyNavBar(props) {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
-          <Nav.Link>Your Link</Nav.Link>
+          {!user ? null : (
+            <Nav.Link to="/user-profile" as={Link}>
+              {" "}
+              {/*if there is no user dont do anything, if there is convert navlink --> to a router link*/}
+              {user.name}
+            </Nav.Link>
+          )}
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              {!users ? (
-                <button onClick={handleLogin}>Login</button>
+              {!isAuthenticated ? ( //
+                <button onClick={() => loginWithRedirect()}>Log In</button>
               ) : (
-                <button> {users[0].first_name} </button>
+                <button
+                  onClick={() =>
+                    logout({
+                      logoutParams: { returnTo: window.location.origin },
+                    })
+                  }
+                >
+                  Log Out
+                </button>
               )}
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Outlet />
     </>
   );
 }

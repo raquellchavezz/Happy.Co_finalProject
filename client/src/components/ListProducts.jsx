@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as ioicons from "react-icons/io5";
 // import MyForm from "./Form";
 import ProductCard from "./ProductCard";
 import { Card, Container } from "semantic-ui-react";
@@ -31,37 +30,6 @@ const ListProducts = () => {
   }, []); //array of dependencies that control when the side effect should be run
   //the useEffect hook is used to run the loadProducts function when the component is mounted (rendered into the DOM) for the first time, which is indicated by the empty dependency array [].
   //This ensures that the list of products is loaded only once, when the component is first rendered.
-
-  // const onSaveStudent = (newStudent) => {
-  //   //console.log(newStudent, "From the parent - List of Students");
-  //   setStudents((students) => [...students, newStudent]);
-  // };
-
-  // //A function to control the update in the parent (student component)
-  // const updateStudent = (savedStudent) => {
-  //   // console.log("Line 29 savedStudent", savedStudent);
-  //   // This function should update the whole list of students -
-  //   loadStudents();
-  // };
-
-  // //A function to handle the Delete funtionality
-  // const onDelete = (student) => {
-  //   //console.log(student, "delete method")
-  //   return fetch(`http://localhost:8080/api/students/${student.id}`, {
-  //     method: "DELETE",
-  //   }).then((response) => {
-  //     //console.log(response);
-  //     if (response.ok) {
-  //       loadStudents();
-  //     }
-  //   });
-  // };
-
-  // //A function to handle the Update functionality
-  // const onUpdate = (toUpdateStudent) => {
-  //   //console.log(toUpdateStudent);
-  //   setEditingStudent(toUpdateStudent);
-  // };
 
   return (
     <Container>
