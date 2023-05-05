@@ -3,16 +3,57 @@ const cors = require("cors");
 require("dotenv").config();
 const path = require("path");
 const db = require("./db/db-connection.js");
+const { Configuration, OpenAIApi } = require("openai"); //package importing from openai
+const { auth } = require("express-oauth2-jwt-bearer");
+//without --save will need to update package.json manually
 
+const { AuthenticationClient } = require("auth0");
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
+//try later:
+// const jwtCheck = auth({
+//   audience: "https://raquelproject/api",
+//   issuerBaseURL: "https://dev-78xt8e8z32ol28ys.us.auth0.com/",
+//   tokenSigningAlg: "RS256",
+// });
+const auth0 = new AuthenticationClient({
+  domain: process.env.AUTH0_DOMAIN,
+  clientId: process.env.AUTH0_CLIENT_ID,
+});
 // creates an endpoint for the route "/""
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  // const userProfile = await auth0.getProfile(req.auth.payload);
+  // console.log("user profile:", userProfile);
   res.json({ message: "Hola, from My template ExpressJS with React-Vite" });
 });
+
+app.post("/api/user", async (req, res) => {
+  try {
+    const userProfile = req.body.user;
+    const newUser = {
+      first_name: req.body.user.given_name,
+      email: req.body.user.email,
+    };
+    const result = await db.query(
+      "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
+      [newUser.first_name, newUser.email]
+    );
+    console.log(result.rows[0]);
+    res.json(result.rows[0]); //setting as response for post request and returnd in json format
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
+  } //if query failed why?
+});
+
+// console.log("user profile:", userProfile);
+
+//   }
+
+// });
 
 // create the get request for users in the endpoint '/api/users'
 // app.get("/api/users", async (req, res) => {
@@ -29,12 +70,16 @@ app.get("/", (req, res) => {
 // });
 
 // create the get request to get all the products from the api
+
 app.get("/api/products", async (req, res) => {
+  // const userProfile = await auth0.getProfile(req.auth.token);
+  // console.log("user profile:", userProfile);
+  //jwtCheck only ppl logged in/auth can see this endpoint
+  //use the first obj jwtCheck as a middleware
   fetch("https://fakestoreapi.com/products") //making the request to the API
-    .then((response) => response.json()) //response
+    .then((response) => response.json()) //response converted to obj
     .then((result) => {
-      //can also name result data
-      console.log("Success:", result);
+      // console.log("Success:", result);
       res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
     }); //result variable needs to be inside scope bc variable won't exist outside of scope
 });

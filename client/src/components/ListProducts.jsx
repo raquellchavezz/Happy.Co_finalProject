@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 // import MyForm from "./Form";
 import ProductCard from "./ProductCard";
 import { Card, Container } from "semantic-ui-react";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const ListProducts = () => {
+  const { user, getAccessTokenSilently } = useAuth0();
   //created a component
   //dealing with products now
   // this is my original state with an array of products
@@ -13,7 +16,7 @@ const ListProducts = () => {
   //this is the state needed for the UpdateRequest
   // const [editingStudent, setEditingStudent] = useState(null);
 
-  const loadProducts = () => {
+  const loadProducts = async () => {
     //created a function that will get a list of products from a server using the 'fetch'
     //pass in products as a prop
     // A function to fetch the list of products that will be load anytime that list change

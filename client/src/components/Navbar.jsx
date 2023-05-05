@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -8,8 +9,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 function MyNavBar(props) {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
-  console.log("From Navbar", user);
-  console.log("From Navbar", isAuthenticated);
+  console.log("From Navbar", user, "From Navbar", isAuthenticated);
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: "/user-profile",
+      },
+    });
+  };
 
   return (
     <>
@@ -34,7 +42,7 @@ function MyNavBar(props) {
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
               {!isAuthenticated ? ( //
-                <button onClick={() => loginWithRedirect()}>Log In</button>
+                <button onClick={() => handleLogin()}>Log In</button>
               ) : (
                 <button
                   onClick={() =>
