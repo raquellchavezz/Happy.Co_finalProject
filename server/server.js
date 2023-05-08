@@ -56,18 +56,19 @@ app.post("/api/user", async (req, res) => {
 // });
 
 // create the get request for users in the endpoint '/api/users'
-// app.get("/api/users", async (req, res) => {
-//   try {
-//     const object = await db.query("SELECT * FROM users");
-//     let users = object.rows;
-//     res.send(users);
 
-// const { rows: users } = await db.query("SELECT * FROM users"); ^ same thing as above but this is object destructuring
-// res.send(users);
-//   } catch (e) {
-//     return res.status(400).json({ e });
-//   }
-// });
+app.get("/api/users", async (req, res) => {
+  try {
+    const object = await db.query("SELECT * FROM users");
+    let users = object.rows;
+    res.send(users);
+
+    // const { rows: users } = await db.query("SELECT * FROM users"); ^ same thing as above but this is object destructuring
+    // res.send(users);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
 
 // create the get request to get all the products from the api
 

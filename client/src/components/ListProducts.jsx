@@ -42,7 +42,7 @@ const ListProducts = () => {
         {" "}
         {/*can style group here, card styling would be done in product card compoennet*/}
         {products.map((product) => (
-          <ProductCard product={product} />
+          <ProductCard product={product} key={product.id} /> //need unique key 
         ))}
       </Card.Group>
     </Container>
