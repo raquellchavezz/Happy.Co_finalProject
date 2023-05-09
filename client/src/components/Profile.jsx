@@ -6,9 +6,10 @@ const Profile = () => {
 
   const sendUser = (user) => {
     //passes state variable to body
-    fetch("http://localhost:8080/api/user", { //{user:user}
+    fetch("/api/user", {
+      //{user:user}, changed this for proxy
       method: "POST",
-      body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and 
+      body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and
       headers: {
         "Content-type": "application/json",
       },
@@ -18,7 +19,8 @@ const Profile = () => {
         console.log(data);
       });
   };
-  if (!user) { //if user hasnt been loaded by auth0 yet 
+  if (!user) {
+    //if user hasnt been loaded by auth0 yet
     return "loading"; //
   }
   return (
