@@ -3,14 +3,29 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu, Segment } from "semantic-ui-react";
 import Logo from "../assets/BlueTechtonicaWord.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Image } from "semantic-ui-react";
+import Profile from "./Profile";
 function MyNavBar(props) {
   const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
     useAuth0();
   console.log("From Navbar", user, "From Navbar", isAuthenticated);
   const [activeItem, setActiveItem] = useState("home");
-
+  const sendUser = (user) => {
+    //passes state variable to body
+    fetch("/api/user", {
+      //{user:user}, changed this for proxy
+      method: "POST",
+      body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
   };
@@ -21,7 +36,13 @@ function MyNavBar(props) {
         returnTo: "/", //went to user profile before
       },
     });
+    //Pass the user data to the target page using URL parameters
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      sendUser(user);
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <>
