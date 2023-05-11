@@ -1,32 +1,35 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
+
 //accessed thru outlet
 const Profile = () => {
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
-  // const sendUser = (user) => {
-  //   //passes state variable to body
-  //   fetch("/api/user", {
-  //     //{user:user}, changed this for proxy
-  //     method: "POST",
-  //     body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // };
+  const sendUser = (user) => {
+    //passes state variable to body
+    fetch("/api/user", {
+      //{user:user}, changed this for proxy
+      method: "POST",
+      body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
   if (!user) {
     //if user hasnt been loaded by auth0 yet
     return "loading"; //
   }
-  // useEffect(() => {
-  //   sendUser(user);
-  // });
+  useEffect(() => {
+    if (isAuthenticated) {
+      sendUser(user);
+    }
+  }, [isAuthenticated, user]);
   return (
     <div>
       <img src={user.picture} alt={user.name} />

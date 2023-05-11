@@ -32,39 +32,25 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
+//creating endpoiny for a new user to be inserted into the database table called user
 app.post("/api/user", async (req, res) => {
   try {
-    const newUser = req.body;
+    const userProfile = req.body.user;
+    const newUser = {
+      first_name: req.body.user.given_name,
+      email: req.body.user.email,
+    };
     const result = await db.query(
       "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
       [newUser.first_name, newUser.email]
     );
-    console.log("New user created:", result.rows[0]);
-    res.json(result.rows[0]); // send the new user data in the response
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to create new user" });
-  }
+    console.log("line 47", result.rows[0]);
+    res.json(result.rows[0]); //setting as response for post request and returnd in json format
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
+  } //if query failed why?
 });
-//creating endpoiny for a new user to be inserted into the database table called user
-// app.post("/api/user", async (req, res) => {
-//   try {
-//     const userProfile = req.body.user;
-//     const newUser = {
-//       first_name: req.body.user.given_name,
-//       email: req.body.user.email,
-//     };
-//     const result = await db.query(
-//       "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
-//       [newUser.first_name, newUser.email]
-//     );
-//     console.log("line 47", result.rows[0]);
-//     res.json(result.rows[0]); //setting as response for post request and returnd in json format
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   } //if query failed why?
-// });
 
 // console.log("user profile:", userProfile);
 
@@ -102,30 +88,31 @@ app.get("/api/products", async (req, res) => {
     }); //result variable needs to be inside scope bc variable won't exist outside of scope
 });
 
-app.get("/api/favorities", async (req, res) => {
-  try {
-    const newProduct = {
-      id: req.body.product.id,
-    };
-    const result = await db.query(
-      //assigning result to the query that will insert the new event we just created
-      // line below inserts a new event into the "events" table w all the stuff we defined in lines 54-56
-      "INSERT INTO favorites(id, ) VALUES ($1) RETURNING *",
-      //RETURNING * clause at the end of the query returns all columns of the newly inserted row.
-      [newProduct.id]
-    );
-    let response = result.rows[0]; //first row returned in the query executed in try block, value of the newly inserted singular row
-    console.log(response);
-    res.json(response);
-  } catch (e) {
-    console.log(error);
-    return res.status(400).json({ error });
-  }
-});
+// app.get("/api/favorities", async (req, res) => {
+//   try {
+//     //console.log(req.body) //tried to console log here to see if I could add an event via postman but didn't work
+//     const newProduct = {
+//       id: req.body.product.id,
+//     };
+//     const result = await db.query(
+//       //assigning result to the query that will insert the new event we just created
+//       // line below inserts a new event into the "events" table w all the stuff we defined in lines 54-56
+//       "INSERT INTO favorites(id) VALUES ($1) RETURNING *",
+//       //RETURNING * clause at the end of the query returns all columns of the newly inserted row.
+//       [new]
+//     );
+//     let response = result.rows[0]; //first row returned in the query executed in try block, value of the newly inserted singular row
+//     console.log(response);
+//     res.json(response);
+//   } catch (e) {
+//     console.log(error);
+//     return res.status(400).json({ error });
+//   }
+// });
 
 // delete request for students
 // app.delete("/api/students/:studentId", async (req, res) => {
-//   try {z
+//   try {
 //     const studentId = req.params.studentId;
 //     await db.query("DELETE FROM students WHERE id=$1", [studentId]);
 //     console.log("From the delete request-url", studentId);
@@ -135,45 +122,6 @@ app.get("/api/favorities", async (req, res) => {
 //     return res.status(400).json({ e });
 //   }
 // });
-
-
-//post request to send data if user liked post 
-app.post("/api/addFavorite", async (req, res) => {
-  try {
-    const userProfile = req.body.user;
-    const newUser = {
-      first_name: req.body.user.given_name,
-      email: req.body.user.email,
-    };
-    const result = await db.query(
-      "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
-      [newUser.first_name, newUser.email]
-    );
-    console.log("line 47", result.rows[0]);
-    res.json(result.rows[0]); //setting as response for post request and returnd in json format
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ e });
-  } //if query failed why?
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // //A put request - Update a student
 // app.put("/api/students/:studentId", async (req, res) => {
