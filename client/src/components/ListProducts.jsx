@@ -20,7 +20,7 @@ const ListProducts = () => {
     //created a function that will get a list of products from a server using the 'fetch'
     //pass in products as a prop
     // A function to fetch the list of products that will be load anytime that list change
-    fetch("http://localhost:8080/api/products")
+    fetch("/api/products") //changed this for proxy
       .then((response) => response.json())
       .then((products) => {
         console.log("from the code in the backend from fetch", products);
@@ -42,7 +42,7 @@ const ListProducts = () => {
         {" "}
         {/*can style group here, card styling would be done in product card compoennet*/}
         {products.map((product) => (
-          <ProductCard product={product} />
+          <ProductCard product={product} key={product.id} /> //need unique key
         ))}
       </Card.Group>
     </Container>
