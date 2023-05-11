@@ -4,33 +4,89 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Menu, Segment } from "semantic-ui-react";
 import Logo from "../assets/BlueTechtonicaWord.png";
 import { useState } from "react";
+import { Image } from "semantic-ui-react";
 function MyNavBar(props) {
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
+    useAuth0();
   console.log("From Navbar", user, "From Navbar", isAuthenticated);
   const [activeItem, setActiveItem] = useState("home");
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
   };
-
-  const handleLogin = async () => {
-    await loginWithRedirect({
-      appState: {
-        returnTo: "/",
+  const sendUser = (user) => {
+    //passes state variable to body
+    fetch("/api/user", {
+      //{user:user}, changed this for proxy
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
       },
-    });
+      body: JSON.stringify({ user }), //stringifying the user obj, key be name of varaible and
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
+  const handleLogin = async () => {
+    try {
+      await loginWithRedirect({
+        onRedirectCallback: async (appState) => {
+          // Get user data from Auth0
+          const user = await getUser();
+
+          // Store user data in your database
+          try {
+            const newUser = {
+              first_name: user.given_name,
+              email: user.email,
+            };
+            const result = await db.query(
+              "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
+              [newUser.first_name, newUser.email]
+            );
+            console.log("New user added:", result.rows[0]);
+          } catch (error) {
+            console.error("Error adding user to database:", error);
+          }
+
+          // Redirect to the app state's target URL
+          window.location.replace(
+            appState && appState.targetUrl
+              ? appState.targetUrl
+              : window.location.pathname
+          );
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // const handleLogin = async () => {
+  //   await loginWithRedirect({
+  //     //test this see if this is execute
+  //     onRedirect: async (url) => {
+  //       const user = await getUser();
+  //       //when redirect after loggin in, invoke the callbakc func
+  //       await sendUser(user); //await makes sure its done
+  //       console.log("onRedirect:", user);
+  //       window.location.replace(url);
+  //     },
+  //     // appState: {
+  //     //   returnTo: "/", //went to user profile before
+  //     // },
+  //   });
+  // };
 
   return (
     <>
       <Segment inverted>
         <Menu inverted secondary>
           <Menu.Item header>
-            <img
+            <Image //can use img from semantic and size it there
               src={Logo}
-              height="15"
-              width="100%"
-              className="d-inline-block align-top"
+              size="small"
             />
           </Menu.Item>
           <Menu.Item
@@ -59,7 +115,7 @@ function MyNavBar(props) {
           )}
           <Menu.Menu position="right">
             <Menu.Item
-              name={!isAuthenticated ? "Log In" : "Log Out"}
+              name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw
               onClick={() => (!isAuthenticated ? handleLogin() : logout())}
             />
           </Menu.Menu>
