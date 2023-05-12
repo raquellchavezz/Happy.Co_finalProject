@@ -5,7 +5,6 @@ import { Card, Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const ListProducts = (props) => {
-  const { user, getAccessTokenSilently } = useAuth0();
   //created a component
   //dealing with products now
   // this is my original state with an array of products
@@ -48,6 +47,7 @@ const ListProducts = (props) => {
             product={product}
             key={product.id}
             isFavorite={props.favoriteArray.includes(product.id)} //going thru each product and looking to see in fav array for the product id and see if its true for being a fav
+            
             setFavoriteArray={props.setFavoriteArray}
           /> //need unique key
         ))}

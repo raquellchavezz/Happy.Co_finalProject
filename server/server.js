@@ -82,11 +82,11 @@ app.get("/api/products", async (req, res) => {
 });
 
 //GET ALL FAVS FOR USER ID
-//TODO: test data into fav table to match whoever is logged in to see if this works 
+//TODO: test data into fav table to match whoever is logged in to see if this works
 app.get("api/user/getFavs/:email", async (req, res) => {
   try {
-    const { email } = req.params; //key is what you're getting off the object --> obj destructing
-    //insert test data into fav table that match user id for whoever is logged in atm force there to be favs 
+    const { email } = req.query; //key is what you're getting off the object --> obj destructing
+    //insert test data into fav table that match user id for whoever is logged in atm force there to be favs
     const { rows: favorites } = await db.query(
       "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.user_id WHERE email = $1",
       [email]
@@ -98,16 +98,16 @@ app.get("api/user/getFavs/:email", async (req, res) => {
   }
 });
 
-app.post("/api/favorites", async (req, res) => {
-  const newFav = { id: req.body.id };
-  console.log([newFav.id]);
-  const result = await db.query(
-    "INSERT INTO favorites(product_id) VALUES returning *",
-    [newFav.id]
-  );
-  console.log(result.rows[0]);
-  res.json(result.rows[0]);
-});
+// app.post("/api/favorites", async (req, res) => {
+//   const newFav = { id: req.body.id };
+//   console.log([newFav.id]);
+//   const result = await db.query(
+//     "INSERT INTO favorites(product_id) VALUES returning *",
+//     [newFav.id]
+//   );
+//   console.log(result.rows[0]);
+//   res.json(result.rows[0]);
+// });
 
 // console.log that your server is up and running
 app.listen(PORT, () => {

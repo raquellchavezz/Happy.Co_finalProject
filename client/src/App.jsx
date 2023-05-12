@@ -14,22 +14,14 @@ import {
 import Favorites from "./components/Favorites";
 import { useState } from "react";
 import { useEffect } from "react";
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path="/" element={<MyNavBar />}>
-//       <Route index element={<ListProducts />} />
-//       <Route path="user-profile" element={<Profile />} />
-//       <Route path="/favorites" element={<Favorites />} />
-//     </Route>
-//   )
-// );
 function App() {
   const [favoriteArray, setFavoriteArray] = useState([]); //will store all of favs for this user
+  const [email, setEmail] = useState("");
   useEffect(() => {
     //TODO:
     //pass value of user.email auht0 set
     //makes a call to db to get all fav and put them into fav array but using setFavoritesArray
-    fetch("/api/user/getFavs")
+    fetch(`/api/user/getFavs/${email}`)
       .then((response) => response.json())
       .then((result) => {
         setFavoriteArray(result);
@@ -56,13 +48,7 @@ function App() {
       </Route>
     )
   );
-  return (
-    <RouterProvider router={router} />
-    // <div className="App">
-    //   <MyNavBar />
-    //   <ListProducts />
-    // </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

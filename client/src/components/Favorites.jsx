@@ -5,11 +5,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 //I want my favorites component to show all products that have been favortied by user
 
 const Favorites = (props) => {
-  //props.favArray has all my favs 
-  //TODO: show all favs can reuse some component logic 
-  //or make new component 
-  // 
+  //props.favArray has all my favs
+  //TODO: show all favs can reuse some component logic
+  //or make new component
   console.log("favorites", props.favoriteArray); //checking if favorites array is logged in browser
+  const loadFavs = async () => {
+    fetch("/api/favorites")
+      .then((response) => response.json())
+      .then((products) => {
+        console.log("from the code in the backend from fetch", products);
+        setFavs(favs);
+      });
+  };
 };
 
 //   const { user, isAuthenticated } = useAuth0();
