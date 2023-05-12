@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import { Card, Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const ListProducts = () => {
+const ListProducts = (props) => {
   const { user, getAccessTokenSilently } = useAuth0();
   //created a component
   //dealing with products now
@@ -42,7 +42,14 @@ const ListProducts = () => {
         {" "}
         {/*can style group here, card styling would be done in product card compoennet*/}
         {products.map((product) => (
-          <ProductCard product={product} key={product.id} /> //need unique key
+          //if the product id in favarr then isfav = true
+
+          <ProductCard
+            product={product}
+            key={product.id}
+            isFavorite={props.favoriteArray.includes(product.id)} //going thru each product and looking to see in fav array for the product id and see if its true for being a fav
+            setFavoriteArray={props.setFavoriteArray}
+          /> //need unique key
         ))}
       </Card.Group>
     </Container>

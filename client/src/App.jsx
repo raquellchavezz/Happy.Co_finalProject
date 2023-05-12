@@ -11,15 +11,51 @@ import {
   Router,
   RouterProvider,
 } from "react-router-dom";
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<MyNavBar />}>
-      <Route index element={<ListProducts />} />
-      <Route path="user-profile" element={<Profile />} />
-    </Route>
-  )
-);
+import Favorites from "./components/Favorites";
+import { useState } from "react";
+import { useEffect } from "react";
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route path="/" element={<MyNavBar />}>
+//       <Route index element={<ListProducts />} />
+//       <Route path="user-profile" element={<Profile />} />
+//       <Route path="/favorites" element={<Favorites />} />
+//     </Route>
+//   )
+// );
 function App() {
+  const [favoriteArray, setFavoriteArray] = useState([]); //will store all of favs for this user
+  useEffect(() => {
+    //TODO:
+    //pass value of user.email auht0 set
+    //makes a call to db to get all fav and put them into fav array but using setFavoritesArray
+    fetch("/api/user/getFavs")
+      .then((response) => response.json())
+      .then((result) => {
+        setFavoriteArray(result);
+      });
+  }, []);
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<MyNavBar />}>
+        <Route
+          index
+          element={
+            <ListProducts
+              setFavoriteArray={favoriteArray}
+              favoriteArray={favoriteArray}
+            />
+          }
+        />
+        <Route path="user-profile" element={<Profile />} />
+        <Route
+          path="/favorites"
+          element={<Favorites favoriteArray={favoriteArray} />}
+        />
+      </Route>
+    )
+  );
   return (
     <RouterProvider router={router} />
     // <div className="App">

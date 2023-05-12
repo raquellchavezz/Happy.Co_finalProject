@@ -1,36 +1,85 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Container, Grid } from "semantic-ui-react";
+import FavoriteButton from "./FavoriteButton";
+import { useAuth0 } from "@auth0/auth0-react";
+//I want my favorites component to show all products that have been favortied by user
 
-export default function showFav(props) {
-  const { product } = props;
-  const [favortites, setFavorites] = useState([]); //empty array of fav items
-  //we want to load all the favIitems the user liked
-  const loadFavorites = () => {
-    fetch("/api/addFavorite") //fetching the user and product id
-      .then((response) => response.json)
-      .then((data) => {
-        setFavorites(data); //setting favorities to that data response we got back which would be the favItem
-      });
-  };
-}
-useEffect(() => {
-  loadFavorites();
-}, []);
-
-const postFavProduct = (newFavProduct) => {
-  return fetch("/api/favorites", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newFavProduct),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log("A Post Was Made ", data);
-      //setFav(data);
-      loadFavorites();
-    });
+const Favorites = (props) => {
+  //props.favArray has all my favs 
+  //TODO: show all favs can reuse some component logic 
+  //or make new component 
+  // 
+  console.log("favorites", props.favoriteArray); //checking if favorites array is logged in browser
 };
+
+//   const { user, isAuthenticated } = useAuth0();
+//   const [favorite, setFavorite] = useState([]);
+//   const { product } = props;
+
+//   const loadFav = () => {
+//     fetch("/favorites")
+//       .then((response) => response.json)
+//       .then((data) => {
+//         setFavorite(data); //setFavorite functioin will set the favorite to the data the response is coming back with
+//       });
+//   };
+//   useEffect(() => {
+//     loadFav();
+//   }, []);
+
+// };
+
+//   useEffect(() => {
+//     const fetchFavorites = async () => {
+//       if (isAuthenticated) {
+//         const response = await fetch(
+//           `https://fakestoreapi.com/users/${user.sub}/favorites`
+//         );
+//         const data = await response.json();
+//         setFavorites(data);
+//       }
+//     };
+//     fetchFavorites();
+//   }, [user, isAuthenticated]);
+
+//   const handleFavoriteToggle = async (productId) => {
+//     if (!isAuthenticated) {
+//       // If the user is not authenticated, show a message or redirect to login page
+//       return "/";
+//     }
+
+//     const isFavorite = favorites.some((fav) => fav.productId === productId);
+//     const url = `https://fakestoreapi.com/users/${user.sub}/favorites/${productId}`;
+//     const method = isFavorite ? "DELETE" : "POST";
+
+//     const response = await fetch(url, { method });
+//     if (response.ok) {
+//       // Update the favorites state if the API call is successful
+//       if (isFavorite) {
+//         setFavorites(favorites.filter((fav) => fav.productId !== productId));
+//       } else {
+//         const data = await response.json();
+//         setFavorites([...favorites, data]);
+//       }
+//     } else {
+//       // Handle error if the API call fails
+//     }
+//   };
+
+//   return (
+//     <Container>
+//       <Grid columns={3}>
+//         {favorites.map((fav) => (
+//           <Grid.Column key={fav.productId}>
+//             <FavoriteButton
+//               isFavorite={true}
+//               productId={fav.productId}
+//               onFavoriteToggle={handleFavoriteToggle}
+//             />
+//           </Grid.Column>
+//         ))}
+//       </Grid>
+//     </Container>
+//   );
+
+export default Favorites;

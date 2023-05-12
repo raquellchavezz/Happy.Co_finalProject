@@ -52,12 +52,6 @@ app.post("/api/user", async (req, res) => {
   } //if query failed why?
 });
 
-// console.log("user profile:", userProfile);
-
-//   }
-
-// });
-
 // create the get request for users in the endpoint '/api/users'
 
 app.get("/api/users", async (req, res) => {
@@ -74,7 +68,6 @@ app.get("/api/users", async (req, res) => {
 });
 
 // create the get request to get all the products from the api
-
 app.get("/api/products", async (req, res) => {
   // const userProfile = await auth0.getProfile(req.auth.token);
   // console.log("user profile:", userProfile);
@@ -88,73 +81,33 @@ app.get("/api/products", async (req, res) => {
     }); //result variable needs to be inside scope bc variable won't exist outside of scope
 });
 
-// app.get("/api/favorities", async (req, res) => {
-//   try {
-//     //console.log(req.body) //tried to console log here to see if I could add an event via postman but didn't work
-//     const newProduct = {
-//       id: req.body.product.id,
-//     };
-//     const result = await db.query(
-//       //assigning result to the query that will insert the new event we just created
-//       // line below inserts a new event into the "events" table w all the stuff we defined in lines 54-56
-//       "INSERT INTO favorites(id) VALUES ($1) RETURNING *",
-//       //RETURNING * clause at the end of the query returns all columns of the newly inserted row.
-//       [new]
-//     );
-//     let response = result.rows[0]; //first row returned in the query executed in try block, value of the newly inserted singular row
-//     console.log(response);
-//     res.json(response);
-//   } catch (e) {
-//     console.log(error);
-//     return res.status(400).json({ error });
-//   }
-// });
+//GET ALL FAVS FOR USER ID
+//TODO: test data into fav table to match whoever is logged in to see if this works 
+app.get("api/user/getFavs/:email", async (req, res) => {
+  try {
+    const { email } = req.params; //key is what you're getting off the object --> obj destructing
+    //insert test data into fav table that match user id for whoever is logged in atm force there to be favs 
+    const { rows: favorites } = await db.query(
+      "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.user_id WHERE email = $1",
+      [email]
+    );
+    res.send(favorites);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ e });
+  }
+});
 
-// delete request for students
-// app.delete("/api/students/:studentId", async (req, res) => {
-//   try {
-//     const studentId = req.params.studentId;
-//     await db.query("DELETE FROM students WHERE id=$1", [studentId]);
-//     console.log("From the delete request-url", studentId);
-//     res.status(200).end();
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   }
-// });
-
-// //A put request - Update a student
-// app.put("/api/students/:studentId", async (req, res) => {
-//   //console.log(req.params);
-//   //This will be the id that I want to find in the DB - the student to be updated
-//   const studentId = req.params.studentId;
-//   const updatedStudent = {
-//     id: req.body.id,
-//     firstname: req.body.firstname,
-//     lastname: req.body.lastname,
-//     iscurrent: req.body.is_current,
-//   };
-//   console.log("In the server from the url - the student id", studentId);
-//   console.log(
-//     "In the server, from the react - the student to be edited",
-//     updatedStudent
-//   );
-//   // UPDATE students SET lastname = "something" WHERE id="16";
-//   const query = `UPDATE students SET firstname=$1, lastname=$2, is_current=$3 WHERE id=${studentId} RETURNING *`;
-//   const values = [
-//     updatedStudent.firstname,
-//     updatedStudent.lastname,
-//     updatedStudent.iscurrent,
-//   ];
-//   try {
-//     const updated = await db.query(query, values);
-//     console.log(updated.rows[0]);
-//     res.send(updated.rows[0]);
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   }
-// });
+app.post("/api/favorites", async (req, res) => {
+  const newFav = { id: req.body.id };
+  console.log([newFav.id]);
+  const result = await db.query(
+    "INSERT INTO favorites(product_id) VALUES returning *",
+    [newFav.id]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
 
 // console.log that your server is up and running
 app.listen(PORT, () => {

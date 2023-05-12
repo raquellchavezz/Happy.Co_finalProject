@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import FavoriteButton from "./FavoriteButton";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isFavorite, setFavoriteArray }) => {
   return (
     <Card>
       <Card.Content>
@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
         <Card.Description>{product.description}</Card.Description>
       </Card.Content>
       <Card.Content extra className="heart-icon">
-        <FavoriteButton />
+        <FavoriteButton productId={product.id} isFavorite={isFavorite} setFavoriteArray ={setFavoriteArray}/>
       </Card.Content>
     </Card> //just want a single card so you dont need card.group
   );
