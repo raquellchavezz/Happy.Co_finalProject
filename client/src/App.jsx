@@ -14,6 +14,9 @@ import {
 import Favorites from "./components/Favorites";
 import { useState } from "react";
 import { useEffect } from "react";
+import Favorites from "./components/Favorites";
+import { useAuth0 } from "@auth0/auth0-react";
+
 function App() {
   const [favoriteArray, setFavoriteArray] = useState([]); //will store all of favs for this user
   const [email, setEmail] = useState("");

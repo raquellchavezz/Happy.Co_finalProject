@@ -85,11 +85,11 @@ app.get("/api/products", async (req, res) => {
 //TODO: test data into fav table to match whoever is logged in to see if this works
 app.get("api/user/getFavs/:email", async (req, res) => {
   try {
-    const { email } = req.query; //key is what you're getting off the object --> obj destructing
+    const { email } = req.params; //key is what you're getting off the object --> obj destructing
     //insert test data into fav table that match user id for whoever is logged in atm force there to be favs
     const { rows: favorites } = await db.query(
       "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.user_id WHERE email = $1",
-      [email]
+      [email] //array containing one elem which is the value of the email varaible
     );
     res.send(favorites);
   } catch (e) {

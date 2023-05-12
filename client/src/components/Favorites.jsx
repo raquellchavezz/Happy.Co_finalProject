@@ -4,20 +4,39 @@ import FavoriteButton from "./FavoriteButton";
 import { useAuth0 } from "@auth0/auth0-react";
 //I want my favorites component to show all products that have been favortied by user
 
-const Favorites = (props) => {
+const Favorites = ({ favoriteArray }) => {
   //props.favArray has all my favs
   //TODO: show all favs can reuse some component logic
   //or make new component
-  console.log("favorites", props.favoriteArray); //checking if favorites array is logged in browser
+  console.log("favorites", favoriteArray); //checking if favorites array is logged in browser
   const loadFavs = async () => {
     fetch("/api/favorites")
       .then((response) => response.json())
-      .then((products) => {
-        console.log("from the code in the backend from fetch", products);
-        setFavs(favs);
+      .then((data) => {
+        console.log("favorites.jsx from the code in the backend from fetch", data);
+        setFavs(data);
       });
   };
+  useEffect(() => {
+    loadfavs();
+  }, [fav]);
+  return (
+    <Container>
+      <Grid columns={3}>
+        {favorites.map((fav) => (
+          <Grid.Column key={fav.productId}>
+            <FavoriteButton
+              isFavorite={true}
+              productId={fav.productId}
+              onFavoriteToggle={handleFavoriteToggle}
+            />
+          </Grid.Column>
+        ))}
+      </Grid>
+    </Container>
+  );
 };
+export default Favorites;
 
 //   const { user, isAuthenticated } = useAuth0();
 //   const [favorite, setFavorite] = useState([]);
@@ -88,5 +107,3 @@ const Favorites = (props) => {
 //       </Grid>
 //     </Container>
 //   );
-
-export default Favorites;
