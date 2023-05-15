@@ -53,7 +53,6 @@ app.post("/api/user", async (req, res) => {
 });
 
 // create the get request for users in the endpoint '/api/users'
-
 app.get("/api/users", async (req, res) => {
   try {
     const object = await db.query("SELECT * FROM users");
@@ -83,18 +82,20 @@ app.get("/api/products", async (req, res) => {
 
 //GET ALL FAVS FOR USER ID
 //TODO: test data into fav table to match whoever is logged in to see if this works
-app.get("api/user/getFavs/:email", async (req, res) => {
+app.get("/api/user/getFavs/:email", async (req, res) => {
+  //  the email is being passed in the request URL as a parameter
   try {
     const { email } = req.params; //key is what you're getting off the object --> obj destructing
     //insert test data into fav table that match user id for whoever is logged in atm force there to be favs
     const { rows: favorites } = await db.query(
-      "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.user_id WHERE email = $1",
+      "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.user_id WHERE email = $1", //the $1 in the SQL query is a parameter marker that is replaced with the first element in the array, which is the email value of the user.
+      //his parameter allows the SQL query to be dynamically generated with the value of the email variable that was passed in the request.
       [email] //array containing one elem which is the value of the email varaible
     );
     res.send(favorites);
   } catch (e) {
     console.error(e);
-    return res.status(500).json({ e });
+    return res.status(500).json({ error: e.message });
   }
 });
 
