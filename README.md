@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Happy.Co 
 ![happyco](https://github.com/raquellchavezz/Happy.Co_finalProject/assets/119717206/6ccc4332-f077-46de-8d24-333333391dbf)
 
@@ -65,3 +66,11 @@ Note: Client server will be running on http://localhost:5173 and server will be 
 Also, provided here is a test user so you will not have to create a an account to log in: 
 * username: happy.couser@gmail.com
 * password: Happy.Co4
+=======
+
+# Happy.Co 
+
+* Happy.Co is a simple yet user-friendly web application that allows visitors to browse through our selection of products as soon as they land on our site. Our platform features an easy-to-use interface that lets users add products to their favorites list for future reference.
+* For added convenience and security, the application uses Auth0 to provide a reliable login process that verifies users' email addresses. Once logged in, visitors can continue exploring our product range and adding items to their favorites list at their leisure.
+* APIs used: fake store API, Auth0
+>>>>>>> b1e016f (Update README.md pt 1)
