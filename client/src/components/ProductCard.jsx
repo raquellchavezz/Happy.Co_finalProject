@@ -13,7 +13,11 @@ const ProductCard = ({ product, isFavorite, setFavoriteArray }) => {
         <Card.Description>{product.description}</Card.Description>
       </Card.Content>
       <Card.Content extra className="heart-icon">
-        <FavoriteButton productId={product.id} isFavorite={isFavorite} setFavoriteArray ={setFavoriteArray}/>
+        <FavoriteButton
+          productId={product.id}
+          isFavorite={isFavorite}
+          setFavoriteArray={setFavoriteArray}
+        />
       </Card.Content>
     </Card> //just want a single card so you dont need card.group
   );

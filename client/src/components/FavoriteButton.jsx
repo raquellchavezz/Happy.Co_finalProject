@@ -26,15 +26,14 @@
 import React, { useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 
-
-const FavoriteButton = ({ productId, isFavorite, setFavoriteArray }) => { 
+const FavoriteButton = ({ productId, isFavorite, setFavoriteArray }) => {
   const [favorite, setFavorite] = useState(isFavorite);
 
   const handleFavoriteToggle = () => {
     //called when user clicks/unclis
     setFavorite(!favorite); //calls the setFavorite function with the current opposite value of favorite
     //TODO: should change favorite array if user fav bc we want to add to fav array or remove from array if unfav
-    //TODO: update the db with either put or delete 
+    //TODO: update the db with either put or delete
     //so if its not fav we want to show the toggle to be add to fav
     // onFavoriteToggle(productId);
   };
