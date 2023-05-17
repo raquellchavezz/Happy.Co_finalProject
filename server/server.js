@@ -99,16 +99,31 @@ app.get("/api/user/getFavs/:email", async (req, res) => {
   }
 });
 
-// app.post("/api/favorites", async (req, res) => {
-//   const newFav = { id: req.body.id };
-//   console.log([newFav.id]);
-//   const result = await db.query(
-//     "INSERT INTO favorites(product_id) VALUES returning *",
-//     [newFav.id]
-//   );
-//   console.log(result.rows[0]);
-//   res.json(result.rows[0]);
-// });
+//add a favorite
+app.post("/api/addFavProduct/:productId", async (req, res) => {
+  const newFav = { id: req.params.productId }; //getting data from the url params
+  console.log([newFav.id]);
+  const result = await db.query(
+    "INSERT INTO favorites(product_id) VALUES  ($1) returning *",
+    [newFav.id]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+app.delete("/api/removeFavProduct/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const deleteProduct = await db.query(
+      "DELETE FROM favorites WHERE productId = $1",
+      [productId]
+    );
+    res.json("Product was deleted");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+});
 
 // console.log that your server is up and running
 app.listen(PORT, () => {

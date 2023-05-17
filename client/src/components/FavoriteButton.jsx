@@ -33,19 +33,47 @@ const FavoriteButton = ({
   favoriteArray,
 }) => {
   const [favorite, setFavorite] = useState(isFavorite);
-  
-  //adding a fav to the fav array and rendering on fav page
-  const addFavorite = () => {
-    let newFav = [...favoriteArray];
-    newFav.push(productId);
-    setFavoriteArray(newFav);
+
+  const addFavoriteProduct = (productId) => {
+    fetch(`api/addFavProduct/${productId}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let newFav = [...favoriteArray];
+        newFav.push(productId);
+        setFavoriteArray(newFav);
+        console.log("newFav from addFavorite func", newFav);
+        console.log("after add favProduct", data); //favoritearray wouldnt change right after calling setfav array only after comp renders
+      });
   };
 
-  //remove fa
+  const removeFavorite = (productId) => {
+    console.log("from removeFav function:", favoriteArray);
+    fetch(`api/removeFavProduct/${productId}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(
+          "this is what we get back from removeFavorite at first",
+          data
+        );
+        let removeFav = [...favoriteArray];
+        removeFav = removeFav.filter( //assign back to removeFav since filter doesnt modifiy orig array just returns a new array 
+          (favProductId) => favProductId !== productId
+        ); //which items should be left over in the favoriteaArray
+        setFavoriteArray(removeFav); //changes array in place??
+        console.log("removeFav array from removeFavorite func", removeFav);
+      });
+  };
 
   const handleFavoriteToggle = () => {
+    console.log("fav button clicked");
     if (!favorite) {
-      addFavorite();
+      addFavoriteProduct(productId);
+    } else {
+      removeFavorite(productId);
     }
     //called when user clicks/unclis
     setFavorite(!favorite); //calls the setFavorite function with the current opposite value of favorite
