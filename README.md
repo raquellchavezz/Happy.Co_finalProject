@@ -78,5 +78,5 @@ Also, provided here is a test user so you will not have to create a an account t
 ## API References 
   <ul>
         <li><a href="https://fakestoreapi.com/">Fake Store API</a></li>
-        <li><a href="https://auth0.com/docs">Auht0</a></li>
+        <li><a href="https://auth0.com/docs">Auth0 Authentication</a></li>
     </ul>
