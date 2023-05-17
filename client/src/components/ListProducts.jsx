@@ -22,6 +22,7 @@ const ListProducts = (props) => {
           <ProductCard
             product={product}
             key={product.id}
+            favoriteArray={props.favoriteArray}
             isFavorite={props.favoriteArray.includes(product.id)} //going thru each product and looking to see in fav array for the product id and see if its true for being a fav
             setFavoriteArray={props.setFavoriteArray}
           /> //need unique key

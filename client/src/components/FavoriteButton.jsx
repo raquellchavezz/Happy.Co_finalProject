@@ -26,10 +26,27 @@
 import React, { useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 
-const FavoriteButton = ({ productId, isFavorite, setFavoriteArray }) => {
+const FavoriteButton = ({
+  productId,
+  isFavorite,
+  setFavoriteArray,
+  favoriteArray,
+}) => {
   const [favorite, setFavorite] = useState(isFavorite);
+  
+  //adding a fav to the fav array and rendering on fav page
+  const addFavorite = () => {
+    let newFav = [...favoriteArray];
+    newFav.push(productId);
+    setFavoriteArray(newFav);
+  };
+
+  //remove fa
 
   const handleFavoriteToggle = () => {
+    if (!favorite) {
+      addFavorite();
+    }
     //called when user clicks/unclis
     setFavorite(!favorite); //calls the setFavorite function with the current opposite value of favorite
     //TODO: should change favorite array if user fav bc we want to add to fav array or remove from array if unfav
