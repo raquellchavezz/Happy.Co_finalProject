@@ -8,5 +8,5 @@
 ## API References 
   <ul>
         <li><a href="https://fakestoreapi.com/">Fake Store API</a></li>
-        <li><a href="https://auth0.com/docs">Auht0</a></li>
+        <li><a href="https://auth0.com/docs">Auth0 Authentication</a></li>
     </ul>
