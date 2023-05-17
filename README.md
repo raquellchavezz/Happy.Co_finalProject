@@ -74,3 +74,9 @@ Also, provided here is a test user so you will not have to create a an account t
 * For added convenience and security, the application uses Auth0 to provide a reliable login process that verifies users' email addresses. Once logged in, visitors can continue exploring our product range and adding items to their favorites list at their leisure.
 * APIs used: fake store API, Auth0
 >>>>>>> b1e016f (Update README.md pt 1)
+
+## API References 
+  <ul>
+        <li><a href="https://fakestoreapi.com/">Fake Store API</a></li>
+        <li><a href="https://auth0.com/docs">Auht0</a></li>
+    </ul>
