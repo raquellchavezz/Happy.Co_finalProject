@@ -110,15 +110,16 @@ app.post("/api/addFavProduct/:productId", async (req, res) => {
   console.log(result.rows[0]);
   res.json(result.rows[0]);
 });
+//remoove favorite
 
 app.delete("/api/removeFavProduct/:productId", async (req, res) => {
   try {
-    const { productId } = req.params;
-    const deleteProduct = await db.query(
-      "DELETE FROM favorites WHERE productId = $1",
-      [productId]
+    const removeFav = { id: req.params.productId };
+    const result = await db.query(
+      "DELETE FROM favorites WHERE product_id = $1",
+      [removeFav.id]
     );
-    res.json("Product was deleted");
+    res.json("Product was deleted, coming from server.js");
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
