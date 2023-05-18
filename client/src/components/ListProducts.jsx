@@ -8,7 +8,7 @@ const ListProducts = (props) => {
   //created a component
   //dealing with products now
   // this is my original state with an array of products
-  console.log("from ListProducts:", props.favoriteArray);
+  console.log("from ListProducts from favoriteArray:", props.favoriteArray);
   return (
     <Container>
       {" "}

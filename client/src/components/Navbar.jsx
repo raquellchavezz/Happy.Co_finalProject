@@ -11,6 +11,10 @@ function MyNavBar(props) {
     useAuth0();
   console.log("From Navbar", user, "From Navbar", isAuthenticated);
   const [activeItem, setActiveItem] = useState("home"); //this will help determine what item we are in the in the nav bar so we can go to the correct page
+
+  // // Check if user is authenticated and extract the email if available
+  // const email = isAuthenticated ? user.email : "";
+
   const sendUser = (user) => {
     //passes state variable to body
     fetch("/api/user", {
@@ -30,6 +34,7 @@ function MyNavBar(props) {
       });
   };
   const handleItemClick = (e, { name }) => {
+    console.log("name from navbar, checking active", name);
     //on navbar
     // name property is used to identify the clicked menu item.
     setActiveItem(name); //name property of the menu item object is extracted and passed to the setActiveItem function.
@@ -74,7 +79,7 @@ function MyNavBar(props) {
           />
           <Menu.Item
             name="Favorites"
-            active={activeItem === "favorites"} //is the current state of active item = the string favorites?
+            active={activeItem === "Favorites"} //is the current state of active item = the string favorites?
             as={Link}
             to="/favorites"
             onClick={handleItemClick}
@@ -82,9 +87,10 @@ function MyNavBar(props) {
           {!user ? null : ( //if there is no user then show nothing, if there is a user show their profiel
             <Menu.Item
               name="Your profile" //text label
-              active={activeItem === "user-profile"} //active prop specifies whether the menu item should be highlighted as the currently active item
+              active={activeItem === "Your profile"} //active prop specifies whether the menu item should be highlighted as the currently active item
               as={Link}
               to="/user-profile"
+              onClick={handleItemClick}
             />
           )}
           <Menu.Menu position="right">

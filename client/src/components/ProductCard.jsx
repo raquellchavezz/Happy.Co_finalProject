@@ -8,6 +8,8 @@ const ProductCard = ({
   setFavoriteArray,
   favoriteArray,
 }) => {
+  console.log("favoriteArray from productCard", favoriteArray);
+
   return (
     <Card>
       <Card.Content>

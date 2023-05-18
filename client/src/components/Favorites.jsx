@@ -34,6 +34,7 @@ const Favorites = ({ favoriteArray, products, setFavoriteArray }) => {
             <ProductCard
               product={product}
               key={product.id}
+              favoriteArray={favoriteArray}
               isFavorite={favoriteArray.includes(product.id)} //going thru each product and looking to see in fav array for the product id and see if its true for being a fav
               setFavoriteArray={setFavoriteArray}
             /> //need unique key

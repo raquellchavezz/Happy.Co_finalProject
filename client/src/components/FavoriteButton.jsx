@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Icon } from "semantic-ui-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
+import { Button, Icon } from "semantic-ui-react";
 const FavoriteButton = ({
   productId,
   isFavorite,
@@ -8,10 +9,28 @@ const FavoriteButton = ({
   favoriteArray,
 }) => {
   const [favorite, setFavorite] = useState(isFavorite);
+  const { user } = useAuth0();
+
+  //make a request to get email
+  // const getEmail = () => {
+  //   fetch(`api/user/getFavs/${email}`, {
+  //     method: POST,
+  //   }).then((response) => response.json());
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } else {
+  //     // Handle error case
+  //     throw new Error("Failed to fetch email");
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
+  // };
 
   const addFavoriteProduct = (productId) => {
     console.log("favorite array current state w/ addFavProduct", favoriteArray);
-    fetch(`api/addFavProduct/${productId}`, {
+    fetch(`api/addFavProduct/${productId}/${user.email}`, {
       method: "POST",
     })
       .then((response) => response.json())
