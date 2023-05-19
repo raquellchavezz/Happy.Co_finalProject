@@ -81,13 +81,11 @@ app.get("/api/products", async (req, res) => {
   // console.log("user profile:", userProfile);
   //jwtCheck only ppl logged in/auth can see this endpoint
   //use the first obj jwtCheck as a middleware
-  fetch("https://fakestoreapi.com/products") //making the request to the API
-    .then((response) => response.json()) //response converted to obj
-    .then((result) => {
-      console.log("Success:", result);
-      res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
-    }); //result variable needs to be inside scope bc variable won't exist outside of scope
-});
+  const response = await fetch("https://fakestoreapi.com/products"); //making the request to the API
+  const result = response.json();
+  console.log("Success:", result);
+  res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
+}); //result variable needs to be inside scope bc variable won't exist outside of scope
 
 //GET ALL FAVS FOR USER ID
 //TODO: test data into fav table to match whoever is logged in to see if this works
