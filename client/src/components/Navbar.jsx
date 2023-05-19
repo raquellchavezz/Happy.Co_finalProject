@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Menu, Segment } from "semantic-ui-react";
 import Logo from "../assets/happyco.png";
 import { useState, useEffect } from "react";
-import { Image } from "semantic-ui-react";
+import { Image, Icon } from "semantic-ui-react";
 
 function MyNavBar({ setUserObj }) {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -67,11 +67,15 @@ function MyNavBar({ setUserObj }) {
           <Menu.Item header className="logo-item">
             <Image //can use img from semantic and size it there
               src={Logo}
-              size="small"
+              size="medium"
+              circular
               className="logo-image"
             />
           </Menu.Item>
           <Menu.Item
+            className="home"
+            icon={<Icon name="home" size="big" style={{ margin: "10 10px" }} />}
+
             name="home"
             active={activeItem === "home"}
             as={Link} //this will help the route link back to the below
@@ -79,6 +83,8 @@ function MyNavBar({ setUserObj }) {
             onClick={handleItemClick} //handleItemClick will be rendered
           />
           <Menu.Item
+            className="favorites"
+            icon={<Icon name="heart outline" size="big" />}
             name="Favorites"
             active={activeItem === "Favorites"} //is the current state of active item = the string favorites?
             as={Link}
@@ -95,7 +101,9 @@ function MyNavBar({ setUserObj }) {
             />
           )} */}
           <Menu.Menu position="right">
-            <Menu.Item className = "logInLogOutButton" // used to render a single item in a menu
+            <Menu.Item
+              icon={<Icon name="user outline" size="big" />}
+              className="logInLogOutButton" // used to render a single item in a menu
               name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw
               onClick={() => (!isAuthenticated ? handleLogin() : logout())}
             />

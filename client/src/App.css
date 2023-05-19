@@ -14,15 +14,27 @@ a.navbar-brand {
   margin-inline-start: -5em;
 }
 .custom-menu {
-  height: 150px; /* Adjust the height value as needed */
+  height: 300px; /* Adjust the height value as needed */
+
 }
 .logo-item {
   display: flex;
   align-items: center;
 }
 .logInLogOutButton{
-  font-size: 18px;
+  font-size: 20px;
   padding: 12px 20px;}
+  .home{
+    font-size: 20px;
+  padding: 12px 30px;
+  padding-left: 10px;
+  padding-top: 5px;
+  }
+  .favorites{
+    font-size: 20px;
+  padding: 12px 20px;
+  }
+
   
 .logo-image {
   width: auto;
