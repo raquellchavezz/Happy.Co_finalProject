@@ -1,6 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyNavBar from "./components/Navbar";
+
 import ListProducts from "./components/ListProducts";
 import "semantic-ui-css/semantic.min.css";
 import Profile from "./components/Profile";
