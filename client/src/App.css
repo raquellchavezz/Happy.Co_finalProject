@@ -13,7 +13,33 @@
 a.navbar-brand {
   margin-inline-start: -5em;
 }
+.custom-menu {
+  height: 300px; /* Adjust the height value as needed */
 
+}
+.logo-item {
+  display: flex;
+  align-items: center;
+}
+.logInLogOutButton{
+  font-size: 20px;
+  padding: 12px 20px;}
+  .home{
+    font-size: 20px;
+  padding: 12px 30px;
+  padding-left: 10px;
+  padding-top: 5px;
+  }
+  .favorites{
+    font-size: 20px;
+  padding: 12px 20px;
+  }
+
+  
+.logo-image {
+  width: auto;
+  height: 50%;
+}
 .nav-link {
   color: rgb(10, 10, 10) !important;
   margin-left: 5em;

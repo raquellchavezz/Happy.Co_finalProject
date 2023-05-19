@@ -32,48 +32,36 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
+//creating endpoiny for a new user to be inserted into the database table called user
 app.post("/api/user", async (req, res) => {
   try {
-    const newUser = req.body;
-    const result = await db.query(
-      "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
-      [newUser.first_name, newUser.email]
-    );
-    console.log("New user created:", result.rows[0]);
-    res.json(result.rows[0]); // send the new user data in the response
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to create new user" });
-  }
+    const userProfile = req.body.user;
+    //need an if stamenet to see if they are already in the db
+    //find user by email see if exist if they dont proceed if not skip insert
+    const userEmail = await db.query("SELECT * FROM users WHERE email = $1", [
+      userProfile.email, //we are selecting all the info frm the users table where the email of the userProfile matches, passing in the user's email
+    ]);
+    if (userEmail.rows.length === 0) {
+      //if the userEmail in the db row has a length of 0, meaning it doesn't exist
+      const newUser = {
+        //then we want to create a newUser for this email and add it to the db
+        first_name: req.body.user.given_name,
+        email: req.body.user.email,
+      };
+      const result = await db.query(
+        "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
+        [newUser.first_name, newUser.email]
+      );
+      console.log("line 47", result.rows[0]);
+      res.json(result.rows[0]);
+    }
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).json({ e });
+  } //if query failed why?
 });
-//creating endpoiny for a new user to be inserted into the database table called user
-// app.post("/api/user", async (req, res) => {
-//   try {
-//     const userProfile = req.body.user;
-//     const newUser = {
-//       first_name: req.body.user.given_name,
-//       email: req.body.user.email,
-//     };
-//     const result = await db.query(
-//       "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
-//       [newUser.first_name, newUser.email]
-//     );
-//     console.log("line 47", result.rows[0]);
-//     res.json(result.rows[0]); //setting as response for post request and returnd in json format
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   } //if query failed why?
-// });
-
-// console.log("user profile:", userProfile);
-
-//   }
-
-// });
 
 // create the get request for users in the endpoint '/api/users'
-
 app.get("/api/users", async (req, res) => {
   try {
     const object = await db.query("SELECT * FROM users");
@@ -88,7 +76,6 @@ app.get("/api/users", async (req, res) => {
 });
 
 // create the get request to get all the products from the api
-
 app.get("/api/products", async (req, res) => {
   // const userProfile = await auth0.getProfile(req.auth.token);
   // console.log("user profile:", userProfile);
@@ -102,111 +89,52 @@ app.get("/api/products", async (req, res) => {
     }); //result variable needs to be inside scope bc variable won't exist outside of scope
 });
 
-app.get("/api/favorities", async (req, res) => {
+//GET ALL FAVS FOR USER ID
+//TODO: test data into fav table to match whoever is logged in to see if this works
+app.get("/api/user/getFavs/:email", async (req, res) => {
+  //  the email is being passed in the request URL as a parameter
   try {
-    const newProduct = {
-      id: req.body.product.id,
-    };
-    const result = await db.query(
-      //assigning result to the query that will insert the new event we just created
-      // line below inserts a new event into the "events" table w all the stuff we defined in lines 54-56
-      "INSERT INTO favorites(id, ) VALUES ($1) RETURNING *",
-      //RETURNING * clause at the end of the query returns all columns of the newly inserted row.
-      [newProduct.id]
+    const { email } = req.params; //key is what you're getting off the object --> obj destructing
+    //insert test data into fav table that match user id for whoever is logged in atm force there to be favs
+    const { rows: favorites } = await db.query(
+      "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.id WHERE u.email = $1", //the $1 in the SQL query is a parameter marker that is replaced with the first element in the array, which is the email value of the user.
+      //his parameter allows the SQL query to be dynamically generated with the value of the email variable that was passed in the request.
+      [email] //array containing one elem which is the value of the email varaible
     );
-    let response = result.rows[0]; //first row returned in the query executed in try block, value of the newly inserted singular row
-    console.log(response);
-    res.json(response);
+    res.send(favorites);
   } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: e.message });
+  }
+});
+
+//add a favorite
+app.post("/api/addFavProduct/:productId/:userEmail", async (req, res) => {
+  const newFav = { id: req.params.productId }; //getting data from the url params
+  const userEmail = { email: req.params.userEmail };
+  console.log([newFav.id]);
+  const result = await db.query(
+    "INSERT INTO favorites (product_id, email) VALUES ($1, $2) returning *",
+    [newFav.id, userEmail.email]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+//remoove favorite
+
+app.delete("/api/removeFavProduct/:productId", async (req, res) => {
+  try {
+    const removeFav = { id: req.params.productId };
+    const result = await db.query(
+      "DELETE FROM favorites WHERE product_id = $1",
+      [removeFav.id]
+    );
+    res.json("Product was deleted, coming from server.js");
+  } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
   }
 });
-
-// delete request for students
-// app.delete("/api/students/:studentId", async (req, res) => {
-//   try {z
-//     const studentId = req.params.studentId;
-//     await db.query("DELETE FROM students WHERE id=$1", [studentId]);
-//     console.log("From the delete request-url", studentId);
-//     res.status(200).end();
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   }
-// });
-
-
-//post request to send data if user liked post 
-app.post("/api/addFavorite", async (req, res) => {
-  try {
-    const userProfile = req.body.user;
-    const newUser = {
-      first_name: req.body.user.given_name,
-      email: req.body.user.email,
-    };
-    const result = await db.query(
-      "INSERT INTO users(first_name, email) VALUES ($1,$2) RETURNING *",
-      [newUser.first_name, newUser.email]
-    );
-    console.log("line 47", result.rows[0]);
-    res.json(result.rows[0]); //setting as response for post request and returnd in json format
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ e });
-  } //if query failed why?
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //A put request - Update a student
-// app.put("/api/students/:studentId", async (req, res) => {
-//   //console.log(req.params);
-//   //This will be the id that I want to find in the DB - the student to be updated
-//   const studentId = req.params.studentId;
-//   const updatedStudent = {
-//     id: req.body.id,
-//     firstname: req.body.firstname,
-//     lastname: req.body.lastname,
-//     iscurrent: req.body.is_current,
-//   };
-//   console.log("In the server from the url - the student id", studentId);
-//   console.log(
-//     "In the server, from the react - the student to be edited",
-//     updatedStudent
-//   );
-//   // UPDATE students SET lastname = "something" WHERE id="16";
-//   const query = `UPDATE students SET firstname=$1, lastname=$2, is_current=$3 WHERE id=${studentId} RETURNING *`;
-//   const values = [
-//     updatedStudent.firstname,
-//     updatedStudent.lastname,
-//     updatedStudent.iscurrent,
-//   ];
-//   try {
-//     const updated = await db.query(query, values);
-//     console.log(updated.rows[0]);
-//     res.send(updated.rows[0]);
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(400).json({ e });
-//   }
-// });
 
 // console.log that your server is up and running
 app.listen(PORT, () => {

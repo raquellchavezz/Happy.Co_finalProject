@@ -1,36 +1,37 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Container, Grid, Card } from "semantic-ui-react";
+import ProductCard from "./ProductCard";
+import FavoriteButton from "./FavoriteButton";
+import { useAuth0 } from "@auth0/auth0-react";
+//I want my favorites component to show all products that have been favortied by user
 
-export default function showFav(props) {
-  const { product } = props;
-  const [favortites, setFavorites] = useState([]); //empty array of fav items
-  //we want to load all the favIitems the user liked
-  const loadFavorites = () => {
-    fetch("/api/addFavorite") //fetching the user and product id
-      .then((response) => response.json)
-      .then((data) => {
-        setFavorites(data); //setting favorities to that data response we got back which would be the favItem
-      });
-  };
-}
-useEffect(() => {
-  loadFavorites();
-}, []);
+const Favorites = ({ favoriteArray, products, setFavoriteArray }) => {
+  //props.favArray has all my favs
+  //TODO: show all favs can reuse some component logic
+  //or make new component
+  console.log("favorites", favoriteArray); //checking if favorites array is logged in browser
 
-const postFavProduct = (newFavProduct) => {
-  return fetch("/api/favorites", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newFavProduct),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log("A Post Was Made ", data);
-      //setFav(data);
-      loadFavorites();
-    });
+  return (
+    <Container>
+      {" "}
+      {/*can add classname here to do some styling, segment, container https://react.semantic-ui.com/elements/container/*/}
+      <Card.Group centered itemsPerRow={4}>
+        {" "}
+        {/*can style group here, card styling would be done in product card compoennet*/}
+        {products.map((product) =>
+          //if the product id in favarr then isfav = true
+          favoriteArray.includes(product.id) ? (
+            <ProductCard
+              product={product}
+              key={product.id}
+              favoriteArray={favoriteArray}
+              isFavorite={favoriteArray.includes(product.id)} //going thru each product and looking to see in fav array for the product id and see if its true for being a fav
+              setFavoriteArray={setFavoriteArray}
+            /> //need unique key
+          ) : null
+        )}
+      </Card.Group>
+    </Container>
+  );
 };
+export default Favorites;
