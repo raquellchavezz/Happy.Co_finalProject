@@ -84,7 +84,7 @@ app.get("/api/products", async (req, res) => {
   fetch("https://fakestoreapi.com/products") //making the request to the API
     .then((response) => response.json()) //response converted to obj
     .then((result) => {
-      // console.log("Success:", result);
+      console.log("Success:", result);
       res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
     }); //result variable needs to be inside scope bc variable won't exist outside of scope
 });
