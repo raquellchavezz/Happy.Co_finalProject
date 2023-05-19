@@ -38,6 +38,10 @@ function App() {
       .then((products) => {
         console.log("from the code in the backend from fetch", products);
         setProducts(products);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+        // Handle the error, e.g., display an error message to the user
       });
   };
 

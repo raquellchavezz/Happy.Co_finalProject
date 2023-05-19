@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu, Segment } from "semantic-ui-react";
-import Logo from "../assets/BlueTechtonicaWord.png";
+import Logo from "../assets/happyco.png";
 import { useState, useEffect } from "react";
 import { Image } from "semantic-ui-react";
 
@@ -50,25 +50,25 @@ function MyNavBar({ setUserObj }) {
   };
   useEffect(() => {
     if (isAuthenticated) {
-      // should be re-run whenever the isAuthenticated or user values change
-      sendUser(user); //if the user is auth then we will send user data to backend
-      setUserObj(user);
+      setUserObj(user); // Set the user object after successful login
+      sendUser(user);
     }
-  }, [[isAuthenticated, user]]);
+  }, [isAuthenticated, user, setUserObj]);
 
   return (
     <>
       <Segment inverted>
         {/*component that creates a segment, which is a flexible and reusable content container used for grouping and displaying content*/}
         {/*segment creates a container for the menu component */}
-        <Menu inverted secondary>
+        <Menu inverted secondary className="custom-menu">
           {" "}
           {/*menu creates a horizontal menu*/}
           {/*inverted inverts the color scheme so that the text/other elms are white and the backgorund is dark */}
-          <Menu.Item header>
+          <Menu.Item header className="logo-item">
             <Image //can use img from semantic and size it there
               src={Logo}
               size="small"
+              className="logo-image"
             />
           </Menu.Item>
           <Menu.Item
@@ -95,7 +95,7 @@ function MyNavBar({ setUserObj }) {
             />
           )} */}
           <Menu.Menu position="right">
-            <Menu.Item // used to render a single item in a menu
+            <Menu.Item className = "logInLogOutButton" // used to render a single item in a menu
               name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw
               onClick={() => (!isAuthenticated ? handleLogin() : logout())}
             />
