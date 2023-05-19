@@ -6,9 +6,8 @@ import Logo from "../assets/BlueTechtonicaWord.png";
 import { useState, useEffect } from "react";
 import { Image } from "semantic-ui-react";
 
-function MyNavBar(props) {
-  const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
-    useAuth0();
+function MyNavBar({ setUserObj }) {
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   console.log("From Navbar", user, "From Navbar", isAuthenticated);
   const [activeItem, setActiveItem] = useState("home"); //this will help determine what item we are in the in the nav bar so we can go to the correct page
 
@@ -46,14 +45,16 @@ function MyNavBar(props) {
         returnTo: "/", //went to user profile before
       },
     });
+    setUserObj(user); //// Pass the user object to setUserObj
     //Pass the user data to the target page using URL parameters
   };
   useEffect(() => {
     if (isAuthenticated) {
       // should be re-run whenever the isAuthenticated or user values change
       sendUser(user); //if the user is auth then we will send user data to backend
+      setUserObj(user);
     }
-  }, [isAuthenticated, user]);
+  }, [[isAuthenticated, user]]);
 
   return (
     <>
@@ -84,7 +85,7 @@ function MyNavBar(props) {
             to="/favorites"
             onClick={handleItemClick}
           />
-          {!user ? null : ( //if there is no user then show nothing, if there is a user show their profiel
+          {/* {!user ? null : ( //if there is no user then show nothing, if there is a user show their profiel
             <Menu.Item
               name="Your profile" //text label
               active={activeItem === "Your profile"} //active prop specifies whether the menu item should be highlighted as the currently active item
@@ -92,7 +93,7 @@ function MyNavBar(props) {
               to="/user-profile"
               onClick={handleItemClick}
             />
-          )}
+          )} */}
           <Menu.Menu position="right">
             <Menu.Item // used to render a single item in a menu
               name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw

@@ -18,18 +18,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
   const [favoriteArray, setFavoriteArray] = useState([]); //will store all of favs for this user
-  const [email, setEmail] = useState("");
-  // useEffect(() => {
-  //   //TODO:
-  //   //pass value of user.email auht0 set
-  //   //makes a call to db to get all fav and put them into fav array but using setFavoritesArray
-  //   fetch(`/api/user/getFavs/${email}`)
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setFavoriteArray(result);
-  //     });
-  // }, []);
+  const { user } = useAuth0();
+  const [userObj, setUserObj] = useState(null);
   const [products, setProducts] = useState([]);
+
   //products is a state variable which uses the useState hook, which initializes the value of products as an empty array.
   // the second element of the array returned by useState is a function named setProducts that can be used to update the value of products.
 
@@ -37,6 +29,7 @@ function App() {
   // const [editingStudent, setEditingStudent] = useState(null);
 
   const loadProducts = async () => {
+    // Check if userObj and userObj.email exist
     //created a function that will get a list of products from a server using the 'fetch'
     //pass in products as a prop
     // A function to fetch the list of products that will be load anytime that list change
@@ -48,6 +41,25 @@ function App() {
       });
   };
 
+  const loadFavorites = async () => {
+    if (userObj && userObj.email) {
+      //created a function that will get a list of products from a server using the 'fetch'
+      //pass in products as a prop
+      // A function to fetch the list of products that will be load anytime that list change
+      fetch(`/api/user/getFavs/${userObj.email}`) //changed this for proxy
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(
+            "from the code in the backend from fetch userObj",
+            userObj
+          );
+          setFavoriteArray(data);
+        });
+    }
+  };
+  useEffect(() => {
+    if (userObj) loadFavorites(); // Only call this if userObj is populated
+  }, [userObj]); // This means, once your user logs in and this object is populated, it will execute this useEffect
   useEffect(() => {
     loadProducts(); //called when component is first rendered, this function will run as a side effect
   }, []); //array of dependencies that control when the side effect should be run
@@ -56,7 +68,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MyNavBar />}>
+      <Route path="/" element={<MyNavBar setUserObj={setUserObj} />}>
         <Route
           index
           element={
@@ -67,7 +79,7 @@ function App() {
             />
           }
         />
-        <Route path="user-profile" element={<Profile />} />
+        {/* <Route path="user-profile" element={<Profile />} /> */}
         <Route
           path="/favorites"
           element={
