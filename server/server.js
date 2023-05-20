@@ -8,6 +8,7 @@ const { Configuration, OpenAIApi } = require("openai"); //package importing from
 const { auth } = require("express-oauth2-jwt-bearer");
 //without --save will need to update package.json manually
 const { AuthenticationClient } = require("auth0");
+const { response } = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -82,10 +83,16 @@ app.get("/api/products", async (req, res) => {
   // console.log("user profile:", userProfile);
   //jwtCheck only ppl logged in/auth can see this endpoint
   //use the first obj jwtCheck as a middleware
-  const response = await axios("https://fakestoreapi.com/products"); //making the request to the API
-  const result = response.json();
-  console.log("Success:", result);
-  res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
+  axios
+    .get("https://fakestoreapi.com/products")
+    .then((response) => response.json()) //making the request to the API
+    .then((data) => {
+      console.log("this is the data coming back from axios:", data);
+      res.send(data);
+    });
+  // const result = response.json();
+  // console.log("Success:", result);
+  // res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
 }); //result variable needs to be inside scope bc variable won't exist outside of scope
 
 //GET ALL FAVS FOR USER ID
