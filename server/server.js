@@ -88,15 +88,7 @@ app.get("/api/products", async (req, res) => {
   } catch (error) {
     console.log("error from catch server.js", error);
   }
-  // const userProfile = await auth0.getProfile(req.auth.token);
-  // console.log("user profile:", userProfile);
-  //jwtCheck only ppl logged in/auth can see this endpoint
-  //use the first obj jwtCheck as a middleware
-
-  // const result = response.json();
-  // console.log("Success:", result);
-  // res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
-}); //result variable needs to be inside scope bc variable won't exist outside of scope
+});
 
 //GET ALL FAVS FOR USER ID
 //TODO: test data into fav table to match whoever is logged in to see if this works
