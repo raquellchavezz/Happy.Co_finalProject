@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch");
+const axios = require("axios");
 require("dotenv").config();
 const path = require("path");
 const db = require("./db/db-connection.js");
@@ -82,7 +82,7 @@ app.get("/api/products", async (req, res) => {
   // console.log("user profile:", userProfile);
   //jwtCheck only ppl logged in/auth can see this endpoint
   //use the first obj jwtCheck as a middleware
-  const response = await fetch("https://fakestoreapi.com/products"); //making the request to the API
+  const response = await axios("https://fakestoreapi.com/products"); //making the request to the API
   const result = response.json();
   console.log("Success:", result);
   res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
