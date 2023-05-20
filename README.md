@@ -1,4 +1,6 @@
 # Happy.Co 
+![happyco](https://github.com/raquellchavezz/Happy.Co_finalProject/assets/119717206/6ccc4332-f077-46de-8d24-333333391dbf)
+
 # Contents
 * About
 * API Reference
