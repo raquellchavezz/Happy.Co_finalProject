@@ -24,6 +24,9 @@
  
 ## Installation
 Step 1. Go to the source directory in your terminal to clone this project. Once that is done, switch into the project directory.
+```bash
+ git clone https://github.com/raquellchavezz/Happy.Co_finalProject.git
+```
 <<<<<<< HEAD
 ```bash
  git clone https://github.com/raquellchavezz/Happy.Co_finalProject.git
