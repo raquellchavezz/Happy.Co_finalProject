@@ -80,13 +80,11 @@ app.get("/api/users", async (req, res) => {
 // create the get request to get all the products from the api
 app.get("/api/products", async (req, res) => {
   try {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((response) => response.json()) //making the request to the API
-      .then((data) => {
-        console.log("this is the data coming back from axios:", data);
-        res.send(data);
-      });
+    axios.get("https://fakestoreapi.com/products").then((response) => {
+      console.log("response.data: ", response.data);
+      let result = response.data;
+      res.send(result);
+    });
   } catch (error) {
     console.log("error from catch server.js", error);
   }
