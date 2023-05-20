@@ -106,11 +106,12 @@ Also, provided here is a test user so you will not have to create a an account t
     </ul>
 =======
 
-git clone https://github.com/raquellchavezz/Happy.Co_finalProject.git
+```git clone https://github.com/raquellchavezz/Happy.Co_finalProject.git
+
 Step 2. To remove the owner git track from the project's main directory, run the command rm -rf .git. Then run the command git init to start your own git track.
 
-rm -rf .git
-git init
+```rm -rf .git
+```git init
 Step 3. Switch into the server folder with the command cd server and install npm with the command npm install.
 
 cd server
