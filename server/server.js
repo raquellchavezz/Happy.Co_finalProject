@@ -79,17 +79,22 @@ app.get("/api/users", async (req, res) => {
 
 // create the get request to get all the products from the api
 app.get("/api/products", async (req, res) => {
+  try {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => response.json()) //making the request to the API
+      .then((data) => {
+        console.log("this is the data coming back from axios:", data);
+        res.send(data);
+      });
+  } catch (error) {
+    console.log("error from catch server.js", error);
+  }
   // const userProfile = await auth0.getProfile(req.auth.token);
   // console.log("user profile:", userProfile);
   //jwtCheck only ppl logged in/auth can see this endpoint
   //use the first obj jwtCheck as a middleware
-  axios
-    .get("https://fakestoreapi.com/products")
-    .then((response) => response.json()) //making the request to the API
-    .then((data) => {
-      console.log("this is the data coming back from axios:", data);
-      res.send(data);
-    });
+
   // const result = response.json();
   // console.log("Success:", result);
   // res.send(result); //result variable needs to be inside scope bc variable won't exist outside of scope
