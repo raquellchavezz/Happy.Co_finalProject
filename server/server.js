@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 require("dotenv").config();
 const path = require("path");
 const db = require("./db/db-connection.js");
