@@ -61,3 +61,4 @@ Step 7: Run both servers by opening a new terminal and by switching over to the 
  cd server
  npm run dev
 ```
+Note: Client server will be running on http://localhost:5173 and server will be running on http://localhost:8080.
