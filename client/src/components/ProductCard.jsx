@@ -13,7 +13,7 @@ const ProductCard = ({
   return (
     <Card>
       <Card.Content>
-        <Image size="small" src={product.image} />
+        <Image alt="image of product" size="small" src={product.image} />
 
         <Card.Header> {product.title}</Card.Header>
         <Card.Meta>${product.price}</Card.Meta>
