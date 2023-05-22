@@ -51,9 +51,14 @@ describe("FavoriteButton.jsx", () => {
 });
 
 //test 4: ProductCard
+//notes: 
+//grouping the tests for the ProductCard component.
+//it function defines an individual test case, the test case is about verifying that the component displays an image of the product.
+// test ensures that the ProductCard component displays an image of the product by checking if the selected image element has an src attribute.
+
 describe("ProductCard", () => {
   it("displays an image of the product", async () => {
-    const product = {
+    const product = {  
       id: 1,
       image: "image-url",
       title: "Product Title",
@@ -61,8 +66,9 @@ describe("ProductCard", () => {
       description: "Product Description",
     };
 
-    const { getByAltText } = render(
-      <ProductCard
+    const { getByAltText } = render(// used to render the ProductCard component
+    // component is rendered with the product object passed as a prop, along with other required props like isFavorite, setFavoriteArray, and favoriteArray. 
+    <ProductCard //mockdata is created here 
         product={product}
         isFavorite={false}
         setFavoriteArray={() => {}}
@@ -70,8 +76,10 @@ describe("ProductCard", () => {
       />
     );
 
-    const image = await getByAltText("image of product");
+    const image = await getByAltText("image of product");//await keyword is used because the getByAltText function returns a promise that resolves when the element is found.
     expect(image).toHaveAttribute("src");
+    //expect statement verifies that the selected image element has an src attribute
+    //toHaveAttribute matcher is used to make this assertion.
   });
 });
 
