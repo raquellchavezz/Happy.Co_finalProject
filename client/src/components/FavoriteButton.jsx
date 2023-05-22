@@ -73,7 +73,7 @@ const FavoriteButton = ({
 
   return (
     <Button
-      role ="button"
+      role="button"
       icon
       labelPosition="left"
       onClick={handleFavoriteToggle}
