@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Card } from "semantic-ui-react";
 import ProductCard from "./ProductCard";
-import FavoriteButton from "./FavoriteButton";
-import { useAuth0 } from "@auth0/auth0-react";
+
 //I want my favorites component to show all products that have been favortied by user
 
 const Favorites = ({ favoriteArray, products, setFavoriteArray }) => {
@@ -21,7 +20,7 @@ const Favorites = ({ favoriteArray, products, setFavoriteArray }) => {
         {products.map((product) =>
           //if the product id in favarr then isfav = true
           favoriteArray.includes(product.id) ? (
-            <ProductCard
+            <ProductCard id = "productCard"
               product={product}
               key={product.id}
               favoriteArray={favoriteArray}

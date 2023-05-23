@@ -95,7 +95,7 @@ function App() {
       </Route>
     )
   );
-  return <RouterProvider router={router} />;
+  return <RouterProvider data-testid="app" router={router} />;
 }
 
 export default App;
