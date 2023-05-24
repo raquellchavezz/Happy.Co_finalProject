@@ -72,7 +72,12 @@ const FavoriteButton = ({
   //
 
   return (
-    <Button icon labelPosition="left" onClick={handleFavoriteToggle}>
+    <Button
+      role="button"
+      icon
+      labelPosition="left"
+      onClick={handleFavoriteToggle}
+    >
       <Icon name="heart" color={favorite ? "red" : "grey"} />
       {favorite ? "Remove from favorites" : "Add to favorites"}
     </Button>

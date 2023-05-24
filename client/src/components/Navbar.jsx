@@ -57,7 +57,7 @@ function MyNavBar({ setUserObj }) {
 
   return (
     <>
-      <Segment inverted>
+      <Segment inverted data-testid="navbar" id="navbar">
         {/*component that creates a segment, which is a flexible and reusable content container used for grouping and displaying content*/}
         {/*segment creates a container for the menu component */}
         <Menu inverted secondary className="custom-menu">
@@ -75,7 +75,6 @@ function MyNavBar({ setUserObj }) {
           <Menu.Item
             className="home"
             icon={<Icon name="home" size="big" style={{ margin: "10 10px" }} />}
-
             name="home"
             active={activeItem === "home"}
             as={Link} //this will help the route link back to the below
@@ -105,7 +104,13 @@ function MyNavBar({ setUserObj }) {
               icon={<Icon name="user outline" size="big" />}
               className="logInLogOutButton" // used to render a single item in a menu
               name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw
-              onClick={() => (!isAuthenticated ? handleLogin() : logout())}
+              onClick={() =>
+                !isAuthenticated
+                  ? handleLogin()
+                  : logout({
+                      logoutParams: { returnTo: "http://localhost:8080" },
+                    })
+              }
             />
           </Menu.Menu>
         </Menu>

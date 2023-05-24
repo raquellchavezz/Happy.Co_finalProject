@@ -1,15 +1,12 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyNavBar from "./components/Navbar";
-
 import ListProducts from "./components/ListProducts";
 import "semantic-ui-css/semantic.min.css";
-import Profile from "./components/Profile";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Router,
   RouterProvider,
 } from "react-router-dom";
 import { useState } from "react";
@@ -98,7 +95,7 @@ function App() {
       </Route>
     )
   );
-  return <RouterProvider router={router} />;
+  return <RouterProvider data-testid="app" router={router} />;
 }
 
 export default App;
