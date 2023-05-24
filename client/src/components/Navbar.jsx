@@ -104,7 +104,13 @@ function MyNavBar({ setUserObj }) {
               icon={<Icon name="user outline" size="big" />}
               className="logInLogOutButton" // used to render a single item in a menu
               name={!isAuthenticated ? "Log In" : "Log Out"} //if they're signed out show log in vs if not shw
-              onClick={() => (!isAuthenticated ? handleLogin() : logout())}
+              onClick={() =>
+                !isAuthenticated
+                  ? handleLogin()
+                  : logout({
+                      logoutParams: { returnTo: "http://localhost:8080" },
+                    })
+              }
             />
           </Menu.Menu>
         </Menu>
