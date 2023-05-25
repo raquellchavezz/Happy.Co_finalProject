@@ -8,10 +8,10 @@ const Favorites = ({ favoriteArray, products, setFavoriteArray }) => {
   //props.favArray has all my favs
   //TODO: show all favs can reuse some component logic
   //or make new component
-  console.log("favorites", favoriteArray); //checking if favorites array is logged in browser
+  // console.log("favorites", favoriteArray); //checking if favorites array is logged in browser
 
   return (
-    <Container>
+    <Container data-testid="favs">
       {" "}
       {/*can add classname here to do some styling, segment, container https://react.semantic-ui.com/elements/container/*/}
       <Card.Group centered itemsPerRow={4}>

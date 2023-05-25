@@ -17,7 +17,7 @@ const FavoriteButton = ({
     // if (!isAuthenticated) {
     //   alert("Please log in to add to favorites!");
     //   return;
-    console.log("favorite array current state w/ addFavProduct", favoriteArray);
+    // console.log("favorite array current state w/ addFavProduct", favoriteArray);
     fetch(`api/addFavProduct/${productId}/${user.email}`, {
       method: "POST",
     })
@@ -26,7 +26,7 @@ const FavoriteButton = ({
         let newFav = [...favoriteArray];
         newFav.push(productId);
         setFavoriteArray(newFav);
-        console.log("newFav from addFavorite func", newFav);
+        // console.log("newFav from addFavorite func", newFav);
         // console.log("after add favProduct", data); //favoritearray wouldnt change right after calling setfav array only after comp renders
       });
   };
@@ -37,12 +37,12 @@ const FavoriteButton = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(
-          "favoriteArray in removeFavorite func after grabbing data",
-          favoriteArray
-        );
+        // console.log(
+        //   "favoriteArray in removeFavorite func after grabbing data",
+        //   favoriteArray
+        // );
         let removeFav = [...favoriteArray];
-        console.log("before resetting the state of setFavArray", removeFav);
+        // console.log("before resetting the state of setFavArray", removeFav);
         removeFav = removeFav.filter(
           //assign back to removeFav since filter doesnt modifiy orig array just returns a new array
           (favProductId) => favProductId !== productId
@@ -50,10 +50,10 @@ const FavoriteButton = ({
         //filter function is used to create a new array removeFav that contains the elements
         //from favoriteArrFay excluding the one with the productId to be removed.
         setFavoriteArray(removeFav); //changes array in place??
-        console.log(
-          "removeFav array from removeFavorite func after reset",
-          removeFav
-        );
+        // console.log(
+        //   "removeFav array from removeFavorite func after reset",
+        //   removeFav
+        // );
       });
   };
 

@@ -34,11 +34,11 @@ function App() {
     fetch("/api/products") //changed this for proxy
       .then((response) => response.json())
       .then((products) => {
-        console.log("from the code in the backend from fetch", products);
+        // console.log("from the code in the backend from fetch", products);
         setProducts(products);
       })
       .catch((error) => {
-        console.error("Error fetching products:", error);
+        // console.error("Error fetching products:", error);
         // Handle the error, e.g., display an error message to the user
       });
   };
@@ -51,10 +51,10 @@ function App() {
       fetch(`/api/user/getFavs/${userObj.email}`) //changed this for proxy
         .then((response) => response.json())
         .then((data) => {
-          console.log(
-            "from the code in the backend from fetch userObj",
-            userObj
-          );
+          // console.log(
+          //   "from the code in the backend from fetch userObj",
+          //   userObj
+          // );
           setFavoriteArray(data);
         });
     }

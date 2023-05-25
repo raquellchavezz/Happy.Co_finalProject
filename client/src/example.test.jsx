@@ -84,3 +84,26 @@ describe("ProductCard", () => {
     //toHaveAttribute matcher is used to make this assertion.
   });
 });
+test("Favorites", () => {
+  const favoriteArray = [1, 3, 5]; // Example favorite product IDs
+  const products = [
+    { id: 1, title: "Product 1", price: 9.99 },
+    { id: 2, title: "Product 2", price: 14.99 },
+    { id: 3, title: "Product 3", price: 19.99 },
+    { id: 4, title: "Product 4", price: 24.99 },
+    { id: 5, title: "Product 5", price: 29.99 },
+  ]; // Example product data
+
+  const { getByTestId } = render(
+    <Router>
+      <Favorites
+        favoriteArray={favoriteArray}
+        products={products}
+        setFavoriteArray={() => {}}
+      />
+    </Router>
+  );
+
+  const favs = getByTestId("favs");
+  expect(favs).toBeDefined();
+});
