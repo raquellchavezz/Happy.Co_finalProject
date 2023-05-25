@@ -8,7 +8,7 @@ import { Image, Icon } from "semantic-ui-react";
 
 function MyNavBar({ setUserObj }) {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
-  console.log("From Navbar", user, "From Navbar", isAuthenticated);
+  // console.log("From Navbar", user, "From Navbar", isAuthenticated);
   const [activeItem, setActiveItem] = useState("home"); //this will help determine what item we are in the in the nav bar so we can go to the correct page
 
   // // Check if user is authenticated and extract the email if available
@@ -29,11 +29,11 @@ function MyNavBar({ setUserObj }) {
       .then((response) => response.json()) //we want to get the response convert to json
       .then((data) => {
         //get that data and
-        console.log(data);
+        // console.log(data);
       });
   };
   const handleItemClick = (e, { name }) => {
-    console.log("name from navbar, checking active", name);
+    // console.log("name from navbar, checking active", name);
     //on navbar
     // name property is used to identify the clicked menu item.
     setActiveItem(name); //name property of the menu item object is extracted and passed to the setActiveItem function.
