@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import FavoriteButton from "./FavoriteButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const ProductCard = ({
   product,
@@ -9,7 +10,7 @@ const ProductCard = ({
   favoriteArray,
 }) => {
   console.log("favoriteArray from productCard", favoriteArray);
-
+  const { user, isAuthenticated } = useAuth0();
   return (
     <Card>
       <Card.Content>
@@ -21,6 +22,7 @@ const ProductCard = ({
       </Card.Content>
       <Card.Content extra className="heart-icon">
         <FavoriteButton
+          disabled={isAuthenticated ? false : true}
           productId={product.id}
           isFavorite={isFavorite}
           setFavoriteArray={setFavoriteArray}
