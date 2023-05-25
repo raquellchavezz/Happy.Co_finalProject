@@ -5,6 +5,7 @@ import { Card, Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const ListProducts = (props) => {
+ 
   //created a component
   //dealing with products now
   // this is my original state with an array of products

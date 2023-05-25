@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-
 import { Button, Icon } from "semantic-ui-react";
 const FavoriteButton = ({
   productId,
   isFavorite,
   setFavoriteArray,
   favoriteArray,
+  disabled,
 }) => {
   const [favorite, setFavorite] = useState(isFavorite);
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
   // };
 
   const addFavoriteProduct = (productId) => {
+    // if (!isAuthenticated) {
+    //   alert("Please log in to add to favorites!");
+    //   return;
     console.log("favorite array current state w/ addFavProduct", favoriteArray);
     fetch(`api/addFavProduct/${productId}/${user.email}`, {
       method: "POST",
@@ -45,7 +48,7 @@ const FavoriteButton = ({
           (favProductId) => favProductId !== productId
         ); //which items should be left over in the favoriteaArray
         //filter function is used to create a new array removeFav that contains the elements
-        //from favoriteArray excluding the one with the productId to be removed.
+        //from favoriteArrFay excluding the one with the productId to be removed.
         setFavoriteArray(removeFav); //changes array in place??
         console.log(
           "removeFav array from removeFavorite func after reset",
@@ -55,7 +58,6 @@ const FavoriteButton = ({
   };
 
   const handleFavoriteToggle = () => {
-    console.log("fav button clicked");
     if (!favorite) {
       addFavoriteProduct(productId);
     } else {
@@ -74,6 +76,7 @@ const FavoriteButton = ({
   return (
     <Button
       role="button"
+      disabled={disabled}
       icon
       labelPosition="left"
       onClick={handleFavoriteToggle}
