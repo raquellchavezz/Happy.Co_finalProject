@@ -62,3 +62,6 @@ Step 7: Run both servers by opening a new terminal and by switching over to the 
  npm run dev
 ```
 Note: Client server will be running on http://localhost:5173 and server will be running on http://localhost:8080.
+Provided here is a test user so you will not have to create a an account to log in: 
+* username: happy.couser@gmail.com
+* password: Happy.Co4
