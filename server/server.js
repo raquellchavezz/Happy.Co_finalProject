@@ -17,12 +17,7 @@ app.use(express.static(REACT_BUILD_DIR));
 app.use(cors());
 app.use(express.json());
 
-//try later:
-// const jwtCheck = auth({
-//   audience: "https://raquelproject/api",
-//   issuerBaseURL: "https://dev-78xt8e8z32ol28ys.us.auth0.com/",
-//   tokenSigningAlg: "RS256",
-// });
+
 const auth0 = new AuthenticationClient({
   domain: process.env.AUTH0_DOMAIN,
   clientId: process.env.AUTH0_CLIENT_ID,
