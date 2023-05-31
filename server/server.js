@@ -17,7 +17,6 @@ app.use(express.static(REACT_BUILD_DIR));
 app.use(cors());
 app.use(express.json());
 
-
 const auth0 = new AuthenticationClient({
   domain: process.env.AUTH0_DOMAIN,
   clientId: process.env.AUTH0_CLIENT_ID,
@@ -93,7 +92,8 @@ app.get("/api/user/getFavs/:email", async (req, res) => {
     const { email } = req.params; //key is what you're getting off the object --> obj destructing
     //insert test data into fav table that match user id for whoever is logged in atm force there to be favs
     const { rows: favorites } = await db.query(
-      "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.id WHERE u.email = $1", //the $1 in the SQL query is a parameter marker that is replaced with the first element in the array, which is the email value of the user.
+      "SELECT product_id FROM favorites WHERE email =$1",
+      // "SELECT f.product_id FROM favorites f JOIN users u ON u.user_id = f.id WHERE u.email = $1", //the $1 in the SQL query is a parameter marker that is replaced with the first element in the array, which is the email value of the user.
       //his parameter allows the SQL query to be dynamically generated with the value of the email variable that was passed in the request.
       [email] //array containing one elem which is the value of the email varaible
     );
