@@ -44,6 +44,7 @@ function App() {
   };
 
   const loadFavorites = async () => {
+    // console.log("checking if loadFav is called");
     if (userObj && userObj.email) {
       //created a function that will get a list of products from a server using the 'fetch'
       //pass in products as a prop

@@ -9,7 +9,7 @@ const ProductCard = ({
   setFavoriteArray,
   favoriteArray,
 }) => {
-  console.log("favoriteArray from productCard", favoriteArray);
+  // console.log("favoriteArray from productCard", favoriteArray);
   const { user, isAuthenticated } = useAuth0();
   return (
     <Card>
